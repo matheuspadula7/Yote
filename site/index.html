@@ -1,0 +1,434 @@
+<title>Yote Farmview</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="O jeito mais simples de gerenciar seus talhões de cana. Mapas, variedades, soqueira e aplicações no celular, sem treinamento.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,600..800&family=IBM+Plex+Mono:wght@500;600&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>/* Layout: faixas horizontais de largura total, conteúdo em grade de 12 colunas até 1200px; mockups de celular alternam lado. */
+:root{
+  color-scheme: light;
+  --navy-900:#0B1E33; --navy-800:#10294A; --navy-700:#173A66; --navy-500:#2C5C9A;
+  --sky-100:#E7EEF6; --paper:#F6F8FB; --white:#FFFFFF;
+  --ink:#0E1B2B; --ink-soft:#4A5B70; --line:#D3DDE8;
+  --cane:#7FB24A; --cane-dark:#4E7F25; --gold:#E2B33C; --pending:#B5470F;
+  --f-display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",Roboto,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --s1:8px;--s2:16px;--s3:24px;--s4:40px;--s5:64px;--s6:104px;
+  --r-sm:6px;--r-md:14px;--r-phone:38px;
+  --shadow:0 24px 60px -24px rgba(11,30,51,.45);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{background:var(--paper);color:var(--ink);font:400 18px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--navy-900)}
+h1,h2,h3{font-family:var(--f-display);line-height:1.08;text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(40px,6.4vw,78px);font-weight:800;font-stretch:88%}
+h2{font-size:clamp(30px,4.2vw,50px);font-weight:800;font-stretch:90%}
+h3{font-size:clamp(22px,2.4vw,28px);font-weight:700}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.band{padding-block:var(--s6)}
+.band.tight{padding-block:var(--s5)}
+.dark{background:var(--navy-900);color:var(--white)}
+.mid{background:var(--sky-100)}
+.eyebrow{font:600 14px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--navy-500)}
+.dark .eyebrow{color:var(--cane)}
+.lead{font-size:clamp(19px,1.6vw,22px);color:var(--ink-soft);max-width:60ch}
+.dark .lead{color:#C4D3E4}
+.pend{background:#FCE9DC;color:var(--pending);font:600 .8em/1 var(--f-mono);padding:.2em .4em;border-radius:4px;white-space:nowrap}
+/* Botões */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:var(--r-sm);font:700 17px/1 var(--f-body);text-decoration:none;cursor:pointer;border:2px solid transparent;transition:transform .15s,background .15s,border-color .15s}
+.btn-primary{background:var(--cane);color:var(--navy-900)}
+.btn-primary:hover{background:#93C55C;transform:translateY(-1px)}
+.btn-secondary{background:transparent;color:var(--navy-800);border-color:var(--navy-800)}
+.btn-secondary:hover{background:var(--navy-800);color:var(--white)}
+.dark .btn-secondary{color:var(--white);border-color:#5C7DA6}
+.dark .btn-secondary:hover{background:var(--white);color:var(--navy-900)}
+.btn-row{display:flex;flex-wrap:wrap;gap:var(--s2)}
+/* Cabeçalho */
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--navy-900);color:var(--white);border-bottom:1px solid #1F3A5E}
+.hdr .wrap{display:flex;align-items:center;gap:var(--s3);min-height:72px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 21px/1 var(--f-display);font-stretch:90%;color:var(--white)}
+.logo svg{flex:none}
+.logo small{font:500 11px/1 var(--f-mono);letter-spacing:.14em;color:#8FA7C4;display:block;margin-top:4px}
+.nav{display:flex;gap:var(--s3);margin-left:auto}
+.nav a{text-decoration:none;font-weight:600;color:#C4D3E4;padding:10px 2px}
+.nav a:hover,.nav a[aria-current="page"]{color:var(--white);box-shadow:inset 0 -2px 0 var(--cane)}
+.hdr-act{display:flex;align-items:center;gap:var(--s2)}
+.hdr-act .login{color:#C4D3E4;font-weight:600;text-decoration:none}
+.hdr .btn{min-height:48px;padding:0 18px;font-size:16px}
+.burger{display:none;background:none;border:1px solid #3A5A82;color:var(--white);width:48px;height:48px;border-radius:var(--r-sm);cursor:pointer}
+@media (max-width:980px){
+  .nav{display:none;position:absolute;left:0;right:0;top:72px;flex-direction:column;gap:0;background:var(--navy-900);padding:var(--s2) max(16px,env(safe-area-inset-right,0px)) var(--s3) max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid #1F3A5E}
+  .nav.open{display:flex}
+  .nav a{padding:14px 0;font-size:19px;border-bottom:1px solid #1F3A5E}
+  .burger{display:inline-grid;place-items:center;order:3}
+  .hdr-act{margin-left:auto}
+  .hdr-act .login{display:none}
+}
+@media (max-width:420px){.hdr .btn{padding:0 12px;font-size:15px}.logo small{display:none}.logo{font-size:18px}}
+/* Hero */
+.hero{background:var(--navy-900);color:var(--white);overflow:hidden;position:relative}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:var(--s5);align-items:center;padding-block:var(--s5) 0}
+.hero-copy{display:grid;gap:var(--s3);padding-bottom:var(--s5);min-width:0}
+.hero h1 em{font-style:normal;color:var(--cane)}
+.micro{font-size:16px;color:#8FA7C4;display:flex;align-items:center;gap:10px}
+.micro::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--cane);flex:none}
+.rows-bg{position:absolute;inset:0;pointer-events:none;opacity:.07;background:repeating-linear-gradient(-62deg,var(--white) 0 2px,transparent 2px 26px)}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr;gap:var(--s4)}.hero-copy{padding-bottom:0}}
+/* Celular */
+.phone{position:relative;width:min(300px,78vw);aspect-ratio:9/19;max-width:100%;border-radius:var(--r-phone);background:#05101D;padding:10px;box-shadow:var(--shadow);margin-inline:auto}
+.phone::before{content:"";position:absolute;top:18px;left:50%;translate:-50% 0;width:84px;height:22px;border-radius:12px;background:#05101D;z-index:2}
+.screen{width:100%;height:100%;border-radius:calc(var(--r-phone) - 10px);overflow:hidden;background:var(--sky-100);position:relative}
+.screen svg{display:block;width:100%;height:100%}
+.ph-tag{position:absolute;left:12px;right:12px;bottom:12px;background:rgba(255,255,255,.94);color:var(--pending);font:600 11px/1.3 var(--f-mono);padding:8px 10px;border-radius:8px;text-align:center}
+.hero .phone{margin-bottom:-60px}
+/* Credibilidade */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line)}
+.stat{padding:var(--s4) var(--s3);border-right:1px solid var(--line);display:grid;gap:8px;align-content:start}
+.stat:last-child{border-right:0}
+.stat b{font:800 clamp(34px,4vw,52px)/1 var(--f-display);font-stretch:88%;color:var(--navy-800);font-variant-numeric:tabular-nums}
+.stat span{color:var(--ink-soft);font-size:16px}
+@media (max-width:860px){.stats{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+@media (max-width:420px){.stat{padding:var(--s3) var(--s2)}}
+/* Split */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);align-items:center}
+.split>*{min-width:0}
+.split .txt{display:grid;gap:var(--s3)}
+.split.rev .txt{order:2}
+@media (max-width:860px){.split{grid-template-columns:1fr;gap:var(--s4)}.split.rev .txt{order:0}}
+.sec-head{display:grid;gap:var(--s2);max-width:760px;margin-bottom:var(--s5)}
+.feat{display:grid;gap:var(--s6)}
+.feat .tag{font:600 13px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--cane-dark)}
+.center{text-align:center;margin-top:var(--s5)}
+/* Planos */
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);align-items:start}
+.plan{background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);padding:var(--s4);display:grid;gap:var(--s3);min-width:0}
+.plan.premium{background:var(--navy-800);color:var(--white);border-color:var(--navy-800);box-shadow:var(--shadow)}
+.plan .badge{justify-self:start;background:var(--gold);color:var(--navy-900);font:700 13px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;padding:7px 10px;border-radius:4px}
+.plan p.desc{color:var(--ink-soft)}
+.plan.premium p.desc,.plan.premium .note{color:#C4D3E4}
+.plan .note{font-size:16px;color:var(--ink-soft);border-left:3px solid var(--cane);padding-left:var(--s2)}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.checks li{display:grid;grid-template-columns:22px 1fr;gap:12px;font-size:17px}
+.checks svg{margin-top:4px}
+.plan .btn{justify-self:start}
+.tip{margin-top:var(--s3);background:var(--white);border:1px dashed var(--navy-500);border-radius:var(--r-md);padding:var(--s3) var(--s4);display:grid;grid-template-columns:auto 1fr;gap:var(--s2);align-items:start}
+.tip b{font:700 13px/1.6 var(--f-mono);text-transform:uppercase;letter-spacing:.1em;color:var(--navy-500)}
+@media (max-width:860px){.plans{grid-template-columns:1fr}.plan{padding:var(--s3)}.tip{grid-template-columns:1fr;padding:var(--s3)}}
+/* Passos */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);counter-reset:s}
+.steps li{display:grid;gap:var(--s2);padding-top:var(--s3);border-top:3px solid var(--cane);counter-increment:s;min-width:0}
+.steps li::before{content:counter(s);font:800 56px/1 var(--f-display);color:#2C4A70}
+.steps p{color:#C4D3E4}
+@media (max-width:860px){.steps{grid-template-columns:1fr}}
+/* Depoimentos */
+.quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--s3)}
+.quote{background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);padding:var(--s4) var(--s3);display:grid;gap:var(--s2)}
+.quote blockquote{margin:0;font-size:19px}
+.quote cite{font-style:normal;font-weight:700}
+.quote cite span{display:block;font-weight:400;color:var(--ink-soft);font-size:15px}
+/* Foto */
+.photo{position:relative;border-radius:var(--r-md);overflow:hidden;aspect-ratio:4/5;max-width:100%;background:linear-gradient(180deg,#9DB8D6 0%,#C9D9EA 46%,var(--cane) 46%,var(--cane-dark) 100%)}
+.photo.wide{aspect-ratio:16/9}
+.photo .ph-tag{bottom:16px}
+.photo svg{position:absolute;inset:0;width:100%;height:100%}
+/* FAQ */
+.faq{max-width:860px;border-top:1px solid var(--line)}
+.faq h3{font-size:inherit}
+.faq button{all:unset;box-sizing:border-box;width:100%;display:flex;justify-content:space-between;gap:var(--s2);align-items:center;min-height:64px;padding:var(--s2) 0;cursor:pointer;font:700 clamp(18px,1.8vw,21px)/1.3 var(--f-body);color:var(--ink)}
+.faq button:focus-visible{outline:3px solid var(--gold)}
+.faq .ico{flex:none;width:32px;height:32px;border-radius:50%;border:2px solid var(--navy-800);display:grid;place-items:center;transition:transform .25s}
+.faq button[aria-expanded="true"] .ico{transform:rotate(45deg);background:var(--navy-800);color:var(--white)}
+.faq .item{border-bottom:1px solid var(--line)}
+.faq .ans{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s}
+.faq .ans.open{grid-template-rows:1fr}
+.faq .ans>div{overflow:hidden}
+.faq .ans p{padding-bottom:var(--s3);color:var(--ink-soft);max-width:65ch}
+/* Contato */
+.contact .wrap{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);align-items:start}
+.contact .wrap>*{min-width:0}
+.contact-info{display:grid;gap:var(--s3)}
+.cline{display:flex;flex-wrap:wrap;align-items:center;gap:12px;font:600 20px/1.3 var(--f-body)}
+.cline .lbl{display:block;width:100%;font:600 12px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:#8FA7C4}
+.cline .val{user-select:all;overflow-wrap:anywhere}
+.copy{background:transparent;color:#C4D3E4;border:1px solid #3A5A82;border-radius:var(--r-sm);min-height:40px;padding:0 12px;font:600 14px var(--f-body);cursor:pointer}
+.copy:hover{color:var(--white);border-color:var(--white)}
+form.lead-form{background:var(--white);color:var(--ink);border-radius:var(--r-md);padding:var(--s4);display:grid;gap:var(--s3)}
+.field{display:grid;gap:8px}
+.field label{font-weight:700;font-size:17px}
+.field input{min-height:54px;border:1.5px solid #9AACBF;border-radius:var(--r-sm);padding:0 14px;font:400 18px var(--f-body);color:var(--ink);background:var(--white);width:100%}
+.field input:focus{outline:3px solid var(--gold);outline-offset:1px;border-color:var(--navy-700)}
+.field input[aria-invalid="true"]{border-color:var(--pending)}
+.err{color:var(--pending);font-size:15px;min-height:0}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.form-micro{font-size:15px;color:var(--ink-soft)}
+.status{border-radius:var(--r-sm);padding:var(--s2);font-weight:600}
+.status.ok{background:#E8F3DC;color:#2F5413}
+.status.bad{background:#FCE9DC;color:var(--pending)}
+.status small{display:block;font-weight:400;margin-top:6px;color:var(--ink-soft)}
+form.lead-form .btn{width:100%}
+.btn[aria-busy="true"]{opacity:.7;pointer-events:none}
+@media (max-width:860px){.contact .wrap{grid-template-columns:1fr;gap:var(--s4)}form.lead-form{padding:var(--s3)}}
+/* Rodapé */
+.ftr{background:#071525;color:#C4D3E4;padding-block:var(--s5) var(--s4);font-size:16px}
+.ftr-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:var(--s4)}
+.ftr-grid>*{min-width:0;display:grid;gap:12px;align-content:start}
+.ftr h4{margin:0;font:600 12px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:#8FA7C4}
+.ftr a{text-decoration:none;color:#C4D3E4}
+.ftr a:hover{color:var(--white);text-decoration:underline}
+.ftr .val{overflow-wrap:anywhere}
+.qr{width:108px;height:108px;background:var(--white);border-radius:8px;padding:8px}
+.socials{display:flex;flex-wrap:wrap;gap:10px}
+.socials a{width:44px;height:44px;border:1px solid #2A4567;border-radius:50%;display:grid;place-items:center}
+.ftr-bottom{margin-top:var(--s5);padding-top:var(--s3);border-top:1px solid #1F3A5E;display:flex;flex-wrap:wrap;gap:var(--s2) var(--s4);justify-content:space-between;font-size:14px}
+.ftr-bottom nav{display:flex;flex-wrap:wrap;gap:var(--s3)}
+.lang{display:flex;gap:4px;font:600 14px var(--f-mono)}
+.lang a,.lang span{padding:6px 10px;border-radius:4px}
+.lang span{background:var(--cane);color:var(--navy-900)}
+@media (max-width:980px){.ftr-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.ftr-grid{grid-template-columns:1fr}}
+/* Sobre */
+.story{max-width:65ch;display:grid;gap:var(--s3);font-size:20px}
+.story strong{font-family:var(--f-display);font-size:clamp(24px,2.6vw,32px);line-height:1.2;color:var(--navy-800)}
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3)}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);padding:var(--s4) var(--s3);display:grid;gap:var(--s2);align-content:start}
+.card svg{color:var(--navy-700)}
+.card p{color:var(--ink-soft)}
+@media (max-width:860px){.cards3{grid-template-columns:1fr}}
+.stats.three{grid-template-columns:repeat(3,1fr)}
+.stats.three .stat:nth-child(2){border-right:1px solid var(--line)}
+@media (max-width:700px){.stats.three{grid-template-columns:1fr}.stats.three .stat{border-right:0!important;border-bottom:1px solid var(--line)}}
+/* Movimento */
+.reveal{transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.js .reveal.pre{transform:translateY(24px)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}.js .reveal.pre{transform:none}}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "Yote Farmview", "url": "https://www.yotefarmview.com", "email": "support@yotefarmview.com", "telephone": "+1-225-572-4195", "founder": {"@type": "Person", "name": "Caio Phillipi"}, "foundingDate": "2019", "areaServed": "Louisiana, US", "sameAs": ["https://www.instagram.com/yotefarmview/", "https://www.facebook.com/profile.php?id=61587002848336", "https://www.linkedin.com/company/yote-farmview", "https://www.youtube.com/@YoteFarmView", "https://www.tiktok.com/@yotefarmview"]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Yote Farmview", "operatingSystem": "iOS", "applicationCategory": "BusinessApplication", "url": "https://apps.apple.com/us/app/yote-farmview/id6758228754"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "O Yote é só para a Louisiana?", "acceptedAnswer": {"@type": "Answer", "text": "Por enquanto, atendemos produtores da Louisiana. Se você está em outro estado, fale com a gente."}}]}</script>
+<a class="pend" href="#conteudo" style="position:absolute;left:-9999px" onfocus="this.style.left='16px'" onblur="this.style.left='-9999px'">Pular para o conteúdo</a>
+<header class="hdr"><div class="wrap">
+<a class="logo" href="./" aria-label="Yote Farmview, início"><svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="7" fill="#7FB24A"/><path d="M6 25 L14 9 M12 27 L20 11 M18 28 L26 12" stroke="#0B1E33" stroke-width="3" stroke-linecap="round"/><circle cx="26" cy="24" r="3.4" fill="#0B1E33"/></svg><span>Yote Farmview<small>LOGO PROVISÓRIO</small></span></a>
+<nav class="nav" id="menu" aria-label="Principal">
+<a href="#recursos">Recursos</a><a href="#planos">Planos</a><a href="sobre.html">Nossa história</a><a href="#contato">Contato</a>
+</nav>
+<div class="hdr-act"><a class="login" href="https://www.yotefarmview.app" target="_blank" rel="noopener">Entrar</a>
+<a class="btn btn-primary" href="#contato" data-track="click_solicitar_demonstracao" data-where="cabecalho">Solicitar demonstração</a></div>
+<button class="burger" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
+</div></header>
+<main id="conteudo">
+<section class="hero" aria-labelledby="h1"><div class="rows-bg" aria-hidden="true"></div><div class="wrap">
+<div class="hero-copy"><p class="eyebrow">Cana-de-açúcar · Louisiana · Desde 2019</p>
+<h1 id="h1">Feito para a cana. <em>Simples de usar.</em></h1>
+<p class="lead">O Yote Farmview é o jeito mais simples de gerenciar seus talhões de cana-de-açúcar. Tudo o que você precisa, no seu celular. Sem treinamento, sem manual, sem dor de cabeça.</p>
+<div class="btn-row"><a class="btn btn-primary" href="#contato" data-track="click_solicitar_demonstracao" data-where="hero">Solicitar demonstração</a><a class="btn btn-secondary" href="https://apps.apple.com/us/app/yote-farmview/id6758228754" target="_blank" rel="noopener" data-track="click_app_store" data-where="hero">Baixar na App Store</a></div>
+<p class="micro">O Caio liga para você pessoalmente. Sem call center.</p></div>
+<div class="phone"><div class="screen"><svg viewBox="0 0 280 590" role="img" aria-label="Mapa colorido da fazenda no app Yote"><rect width="280" height="590" fill="#E7EEF6"/><rect width="280" height="96" fill="#0B1E33"/><text x="20" y="74" fill="#fff" font-family="Archivo,Arial" font-weight="700" font-size="20">Fazenda exemplo</text><rect x="14" y="108" width="252" height="34" rx="17" fill="#fff"/><text x="30" y="130" fill="#0B1E33" font-family="Source Sans 3,Arial" font-size="14" font-weight="600">Ver por: Variedade ▾</text><polygon points="6,156 98,153 104,222 12,225" fill="#E2B33C" stroke="#fff" stroke-width="3"/><polygon points="107,156 157,159 150,222 100,219" fill="#C55A3A" stroke="#fff" stroke-width="3"/><polygon points="163,156 239,158 235,222 159,220" fill="#7FB24A" stroke="#fff" stroke-width="3"/><polygon points="248,156 268,159 261,222 241,219" fill="#2C5C9A" stroke="#fff" stroke-width="3"/><polygon points="4,226 89,222 97,300 12,304" fill="#8C6BB1" stroke="#fff" stroke-width="3"/><polygon points="91,226 169,226 169,300 91,300" fill="#8C6BB1" stroke="#fff" stroke-width="3"/><polygon points="170,226 268,225 269,300 171,301" fill="#5FA8C9" stroke="#fff" stroke-width="3"/><polygon points="14,304 119,305 117,369 12,368" fill="#2C5C9A" stroke="#fff" stroke-width="3"/><polygon points="113,304 172,300 180,369 121,373" fill="#8C6BB1" stroke="#fff" stroke-width="3"/><polygon points="166,304 258,300 266,369 174,373" fill="#C55A3A" stroke="#fff" stroke-width="3"/><polygon points="258,304 268,303 270,369 260,370" fill="#C55A3A" stroke="#fff" stroke-width="3"/><polygon points="11,373 95,372 96,435 12,436" fill="#C55A3A" stroke="#fff" stroke-width="3"/><polygon points="104,373 207,376 200,435 97,432" fill="#5FA8C9" stroke="#fff" stroke-width="3"/><polygon points="212,373 268,374 265,435 209,434" fill="#7FB24A" stroke="#fff" stroke-width="3"/><polygon points="18,439 110,442 104,508 12,505" fill="#E2B33C" stroke="#fff" stroke-width="3"/><polygon points="104,439 221,435 229,508 112,512" fill="#C55A3A" stroke="#fff" stroke-width="3"/><polygon points="218,439 268,436 273,508 223,511" fill="#7FB24A" stroke="#fff" stroke-width="3"/></svg><p class="ph-tag">[PENDENTE: print real /app-screenshot-map.png]</p></div></div>
+</div></section>
+
+<section class="band tight" aria-label="Números do Yote" style="padding-top:calc(var(--s5) + 40px)"><div class="wrap"><div class="stats">
+<div class="stat"><b><span class="pend">[XX mil]</span>+</b><span>acres gerenciados no Yote</span></div>
+<div class="stat"><b data-count="2019" data-from="2000">2019</b><span>primeiro app de mapeamento só para cana nos EUA</span></div>
+<div class="stat"><b data-count="100" data-suffix="%">100%</b><span>feito para produtores, focado nos seus talhões</span></div>
+<div class="stat"><b>Louisiana</b><span>nossas raízes, o próximo capítulo da sua fazenda</span></div>
+</div></div></section>
+
+<section class="band mid" aria-labelledby="prob-t"><div class="wrap split">
+<div class="txt reveal"><p class="eyebrow">Por que o Yote</p><h2 id="prob-t">O produtor sempre teve a informação. Faltava um jeito simples de usá-la.</h2>
+<p class="lead">Mapas de papel se perdem. Pastas se acumulam. E a maioria dos softwares agrícolas foi feita para outra cultura, não para a sua.</p>
+<p class="lead" style="color:var(--ink)">O Yote foi feito para uma coisa só: cana-de-açúcar. Se você sabe usar o celular, sabe usar o Yote. Tudo no bolso, na hora em que você precisa.</p></div>
+<div class="phone"><div class="screen"><svg viewBox="0 0 280 590" role="img" aria-label="Fazenda colorida por soqueira"><rect width="280" height="590" fill="#E7EEF6"/><rect width="280" height="96" fill="#0B1E33"/><text x="20" y="74" fill="#fff" font-family="Archivo,Arial" font-weight="700" font-size="20">Fazenda exemplo</text><rect x="14" y="108" width="252" height="34" rx="17" fill="#fff"/><text x="30" y="130" fill="#0B1E33" font-family="Source Sans 3,Arial" font-size="14" font-weight="600">Ver por: Soqueira ▾</text><polygon points="6,156 67,153 73,219 12,222" fill="#B9D98C" stroke="#fff" stroke-width="3"/><polygon points="66,156 172,154 175,219 69,221" fill="#7FB24A" stroke="#fff" stroke-width="3"/><polygon points="175,156 268,156 267,219 174,219" fill="#B9D98C" stroke="#fff" stroke-width="3"/><polygon points="5,223 75,219 82,304 12,308" fill="#C55A3A" stroke="#fff" stroke-width="3"/><polygon points="74,223 170,221 173,304 77,306" fill="#E2B33C" stroke="#fff" stroke-width="3"/><polygon points="176,223 262,225 258,304 172,302" fill="#7FB24A" stroke="#fff" stroke-width="3"/><polygon points="15,308 122,309 119,386 12,385" fill="#C55A3A" stroke="#fff" stroke-width="3"/><polygon points="130,308 233,311 227,386 124,383" fill="#C55A3A" stroke="#fff" stroke-width="3"/><polygon points="228,308 268,304 275,386 235,390" fill="#7FB24A" stroke="#fff" stroke-width="3"/><polygon points="14,390 91,391 89,463 12,462" fill="#E2B33C" stroke="#fff" stroke-width="3"/><polygon points="101,390 170,394 162,463 93,459" fill="#4E7F25" stroke="#fff" stroke-width="3"/><polygon points="169,390 257,388 260,463 172,465" fill="#4E7F25" stroke="#fff" stroke-width="3"/><polygon points="251,390 268,386 276,463 259,467" fill="#4E7F25" stroke="#fff" stroke-width="3"/><polygon points="8,467 73,465 77,539 12,541" fill="#C55A3A" stroke="#fff" stroke-width="3"/><polygon points="78,467 157,468 154,539 75,538" fill="#C55A3A" stroke="#fff" stroke-width="3"/><polygon points="156,467 252,465 255,539 159,541" fill="#E2B33C" stroke="#fff" stroke-width="3"/><polygon points="259,467 268,469 263,539 254,537" fill="#7FB24A" stroke="#fff" stroke-width="3"/></svg><p class="ph-tag">[PENDENTE: print real /app-screenshot-stubble.png]</p></div></div>
+</div></section>
+
+<section class="band" id="recursos" aria-labelledby="rec-t"><div class="wrap">
+<div class="sec-head reveal"><p class="eyebrow">Recursos</p><h2 id="rec-t">Tudo o que sua fazenda precisa. Nada que ela não precisa.</h2><p class="lead">Feito sob medida para cana-de-açúcar, sem botões extras e sem confusão.</p></div>
+<div class="feat"><article class="split reveal"><div class="txt"><p class="tag">Mapas coloridos</p><h3>Veja a fazenda inteira do jeito que precisar.</h3><p class="lead">Alterne entre as visões de soqueira, variedade, colheita e maturador com um toque. Cada talhão ganha uma cor, e você sabe exatamente o que está onde, sem encostar em papel nenhum.</p></div><div class="phone"><div class="screen"><svg viewBox="0 0 280 590" role="img" aria-label="Mapa da fazenda colorido por maturador"><rect width="280" height="590" fill="#E7EEF6"/><rect width="280" height="96" fill="#0B1E33"/><text x="20" y="74" fill="#fff" font-family="Archivo,Arial" font-weight="700" font-size="20">Fazenda exemplo</text><rect x="14" y="108" width="252" height="34" rx="17" fill="#fff"/><text x="30" y="130" fill="#0B1E33" font-family="Source Sans 3,Arial" font-size="14" font-weight="600">Ver por: Maturador ▾</text><polygon points="8,156 99,154 103,225 12,227" fill="#7FB24A" stroke="#fff" stroke-width="3"/><polygon points="108,156 209,159 202,225 101,222" fill="#5FA8C9" stroke="#fff" stroke-width="3"/><polygon points="205,156 268,153 274,225 211,228" fill="#E2B33C" stroke="#fff" stroke-width="3"/><polygon points="19,229 120,232 113,291 12,288" fill="#7FB24A" stroke="#fff" stroke-width="3"/><polygon points="121,229 207,228 208,291 122,292" fill="#F0D27A" stroke="#fff" stroke-width="3"/><polygon points="216,229 268,232 261,291 209,288" fill="#E2B33C" stroke="#fff" stroke-width="3"/><polygon points="16,295 92,297 88,374 12,372" fill="#5FA8C9" stroke="#fff" stroke-width="3"/><polygon points="90,295 199,293 203,374 94,376" fill="#F0D27A" stroke="#fff" stroke-width="3"/><polygon points="197,295 268,293 272,374 201,376" fill="#E2B33C" stroke="#fff" stroke-width="3"/><polygon points="4,378 109,374 117,452 12,456" fill="#5FA8C9" stroke="#fff" stroke-width="3"/><polygon points="105,378 210,375 216,452 111,455" fill="#F0D27A" stroke="#fff" stroke-width="3"/><polygon points="205,378 268,374 275,452 212,456" fill="#7FB24A" stroke="#fff" stroke-width="3"/><polygon points="12,456 114,456 114,518 12,518" fill="#C55A3A" stroke="#fff" stroke-width="3"/><polygon points="120,456 204,458 200,518 116,516" fill="#5FA8C9" stroke="#fff" stroke-width="3"/><polygon points="211,456 268,458 263,518 206,516" fill="#C55A3A" stroke="#fff" stroke-width="3"/></svg><p class="ph-tag">[PENDENTE: print real /app-screenshot-ripener.png]</p></div></div></article><article class="split reveal rev"><div class="txt"><p class="tag">Variedades divididas</p><h3>Um talhão, duas variedades. Sem problema.</h3><p class="lead">Trace uma linha de divisão por número de fileiras e nomeie cada lado. O mapa de variedades continua correto mesmo quando você planta mais de uma no mesmo talhão.</p></div><div class="phone"><div class="screen"><svg viewBox="0 0 280 590" role="img" aria-label="Talhões com linha de divisão entre duas variedades"><rect width="280" height="590" fill="#E7EEF6"/><rect width="280" height="96" fill="#0B1E33"/><text x="20" y="74" fill="#fff" font-family="Archivo,Arial" font-weight="700" font-size="20">Fazenda exemplo</text><rect x="14" y="108" width="252" height="34" rx="17" fill="#fff"/><text x="30" y="130" fill="#0B1E33" font-family="Source Sans 3,Arial" font-size="14" font-weight="600">Ver por: Variedade ▾</text><polygon points="7,156 81,153 86,225 12,228" fill="#5FA8C9" stroke="#fff" stroke-width="3"/><polygon points="90,156 158,159 151,225 83,222" fill="#5FA8C9" stroke="#fff" stroke-width="3"/><polygon points="154,156 215,153 221,225 160,228" fill="#2C5C9A" stroke="#fff" stroke-width="3"/><polygon points="218,156 268,156 267,225 217,225" fill="#2C5C9A" stroke="#fff" stroke-width="3"/><polygon points="15,229 95,230 92,298 12,297" fill="#7FB24A" stroke="#fff" stroke-width="3"/><line x1="53" y1="233" x2="53" y2="294" stroke="#fff" stroke-width="2.5" stroke-dasharray="6 4"/><polygon points="94,229 196,227 199,298 97,300" fill="#2C5C9A" stroke="#fff" stroke-width="3"/><line x1="146" y1="233" x2="146" y2="294" stroke="#fff" stroke-width="2.5" stroke-dasharray="6 4"/><polygon points="196,229 264,228 266,298 198,299" fill="#2C5C9A" stroke="#fff" stroke-width="3"/><polygon points="12,302 113,302 113,384 12,384" fill="#7FB24A" stroke="#fff" stroke-width="3"/><line x1="62" y1="306" x2="62" y2="380" stroke="#fff" stroke-width="2.5" stroke-dasharray="6 4"/><polygon points="112,302 177,300 180,384 115,386" fill="#7FB24A" stroke="#fff" stroke-width="3"/><polygon points="182,302 247,303 244,384 179,383" fill="#2C5C9A" stroke="#fff" stroke-width="3"/><polygon points="251,302 268,303 266,384 249,383" fill="#5FA8C9" stroke="#fff" stroke-width="3"/><polygon points="11,388 94,387 95,462 12,463" fill="#5FA8C9" stroke="#fff" stroke-width="3"/><line x1="53" y1="392" x2="53" y2="458" stroke="#fff" stroke-width="2.5" stroke-dasharray="6 4"/><polygon points="103,388 161,391 154,462 96,459" fill="#7FB24A" stroke="#fff" stroke-width="3"/><polygon points="164,388 218,388 217,462 163,462" fill="#2C5C9A" stroke="#fff" stroke-width="3"/><polygon points="221,388 268,388 267,462 220,462" fill="#B9D98C" stroke="#fff" stroke-width="3"/><polygon points="20,466 116,470 108,537 12,533" fill="#5FA8C9" stroke="#fff" stroke-width="3"/><line x1="64" y1="470" x2="64" y2="533" stroke="#fff" stroke-width="2.5" stroke-dasharray="6 4"/><polygon points="123,466 194,468 189,537 118,535" fill="#B9D98C" stroke="#fff" stroke-width="3"/><polygon points="201,466 264,468 259,537 196,535" fill="#2C5C9A" stroke="#fff" stroke-width="3"/></svg><p class="ph-tag">[PENDENTE: print real /app-screenshot-split.png]</p></div></div></article><article class="split reveal"><div class="txt"><p class="tag">Exportar e compartilhar</p><h3>Mande um mapa limpo em segundos.</h3><p class="lead">Gere um PDF profissional com a marca Yote e envie para a equipe, o proprietário da terra ou o agrônomo com um toque. Sem imprimir, sem escanear, sem explicar.</p></div><div class="phone"><div class="screen"><svg viewBox="0 0 280 590" role="img" aria-label="Lista de talhões pronta para exportar em PDF"><rect width="280" height="590" fill="#E7EEF6"/><rect width="280" height="96" fill="#0B1E33"/><text x="20" y="74" fill="#fff" font-family="Archivo,Arial" font-weight="700" font-size="20">Fazenda exemplo</text><rect x="14" y="112" width="252" height="58" rx="10" fill="#fff"/><rect x="26" y="124" width="10" height="34" rx="3" fill="#7FB24A"/><text x="48" y="147" fill="#0E1B2B" font-family="Source Sans 3,Arial" font-size="15" font-weight="600">Talhão 12 · L 01</text><rect x="14" y="180" width="252" height="58" rx="10" fill="#fff"/><rect x="26" y="192" width="10" height="34" rx="3" fill="#2C5C9A"/><text x="48" y="215" fill="#0E1B2B" font-family="Source Sans 3,Arial" font-size="15" font-weight="600">Talhão 14 · HoCP 96-540</text><rect x="14" y="248" width="252" height="58" rx="10" fill="#fff"/><rect x="26" y="260" width="10" height="34" rx="3" fill="#E2B33C"/><text x="48" y="283" fill="#0E1B2B" font-family="Source Sans 3,Arial" font-size="15" font-weight="600">Talhão 21 · L 03-371</text><rect x="14" y="316" width="252" height="58" rx="10" fill="#fff"/><rect x="26" y="328" width="10" height="34" rx="3" fill="#C55A3A"/><text x="48" y="351" fill="#0E1B2B" font-family="Source Sans 3,Arial" font-size="15" font-weight="600">Talhão 07 · Ho 12-615</text><rect x="14" y="384" width="252" height="58" rx="10" fill="#fff"/><rect x="26" y="396" width="10" height="34" rx="3" fill="#5FA8C9"/><text x="48" y="419" fill="#0E1B2B" font-family="Source Sans 3,Arial" font-size="15" font-weight="600">Talhão 30 · L 01-299</text><rect x="14" y="452" width="252" height="58" rx="10" fill="#fff"/><rect x="26" y="464" width="10" height="34" rx="3" fill="#4E7F25"/><text x="48" y="487" fill="#0E1B2B" font-family="Source Sans 3,Arial" font-size="15" font-weight="600">Talhão 33 · HoCP 04-838</text></svg><p class="ph-tag">[PENDENTE: print real /app-screenshot-list.png]</p></div></div></article><article class="split reveal rev"><div class="txt"><p class="tag">Registro de aplicações</p><h3>Registre cada aplicação direto do campo.</h3><p class="lead">Anote o produto, a dose e a unidade, sempre ligados aos talhões exatos onde foram aplicados. O histórico completo de todas as aplicações, sempre no seu bolso.</p></div><div class="phone"><div class="screen"><svg viewBox="0 0 280 590" role="img" aria-label="Lista de aplicações com produto e dose"><rect width="280" height="590" fill="#E7EEF6"/><rect width="280" height="96" fill="#0B1E33"/><text x="20" y="74" fill="#fff" font-family="Archivo,Arial" font-weight="700" font-size="20">Fazenda exemplo</text><rect x="14" y="112" width="252" height="58" rx="10" fill="#fff"/><rect x="26" y="124" width="10" height="34" rx="3" fill="#7FB24A"/><text x="48" y="147" fill="#0E1B2B" font-family="Source Sans 3,Arial" font-size="15" font-weight="600">Produto A · 2,0 L/ac</text><rect x="14" y="180" width="252" height="58" rx="10" fill="#fff"/><rect x="26" y="192" width="10" height="34" rx="3" fill="#2C5C9A"/><text x="48" y="215" fill="#0E1B2B" font-family="Source Sans 3,Arial" font-size="15" font-weight="600">Produto B · 1,5 pt/ac</text><rect x="14" y="248" width="252" height="58" rx="10" fill="#fff"/><rect x="26" y="260" width="10" height="34" rx="3" fill="#E2B33C"/><text x="48" y="283" fill="#0E1B2B" font-family="Source Sans 3,Arial" font-size="15" font-weight="600">Produto C · 32 oz/ac</text><rect x="14" y="316" width="252" height="58" rx="10" fill="#fff"/><rect x="26" y="328" width="10" height="34" rx="3" fill="#C55A3A"/><text x="48" y="351" fill="#0E1B2B" font-family="Source Sans 3,Arial" font-size="15" font-weight="600">Produto D · 0,5 lb/ac</text><rect x="14" y="384" width="252" height="58" rx="10" fill="#fff"/><rect x="26" y="396" width="10" height="34" rx="3" fill="#5FA8C9"/><text x="48" y="419" fill="#0E1B2B" font-family="Source Sans 3,Arial" font-size="15" font-weight="600">Produto E · 1,0 L/ac</text><rect x="14" y="452" width="252" height="58" rx="10" fill="#fff"/><rect x="26" y="464" width="10" height="34" rx="3" fill="#4E7F25"/><text x="48" y="487" fill="#0E1B2B" font-family="Source Sans 3,Arial" font-size="15" font-weight="600">Produto F · 24 oz/ac</text></svg><p class="ph-tag">[PENDENTE: print real /app-screenshot-products.png]</p></div></div></article></div>
+<p class="center"><a class="btn btn-primary" href="#contato" data-track="click_solicitar_demonstracao" data-where="recursos">Quero ver o Yote na minha fazenda</a></p>
+</div></section>
+
+<section class="band mid" id="planos" aria-labelledby="pla-t"><div class="wrap">
+<div class="sec-head reveal"><p class="eyebrow">Planos</p><h2 id="pla-t">Dois jeitos de começar.</h2><p class="lead">Nos dois, o Caio configura tudo para você. Escolha o nível de precisão.</p></div>
+<div class="plans">
+<article class="plan reveal"><h3>Yote Base</h3><p class="desc">Mapeamos seus talhões por imagem de satélite, ou usamos seus shapefiles, e deixamos sua conta pronta para uso.</p>
+<ul class="checks"><li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9" fill="#7FB24A"/><path d="M5 9.4l2.6 2.5L13 6.4" stroke="#0B1E33" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span>Mapeamento por satélite ou importação dos seus shapefiles</span></li><li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9" fill="#7FB24A"/><path d="M5 9.4l2.6 2.5L13 6.4" stroke="#0B1E33" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span>Todos os talhões com variedade e soqueira desde o início</span></li><li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9" fill="#7FB24A"/><path d="M5 9.4l2.6 2.5L13 6.4" stroke="#0B1E33" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span>Acompanhe a soqueira de cada talhão a cada safra</span></li><li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9" fill="#7FB24A"/><path d="M5 9.4l2.6 2.5L13 6.4" stroke="#0B1E33" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span>Vários usuários com níveis de acesso diferentes</span></li><li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9" fill="#7FB24A"/><path d="M5 9.4l2.6 2.5L13 6.4" stroke="#0B1E33" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span>Controle da cana-semente durante a colheita</span></li><li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9" fill="#7FB24A"/><path d="M5 9.4l2.6 2.5L13 6.4" stroke="#0B1E33" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span>Variedades divididas dentro do talhão</span></li><li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9" fill="#7FB24A"/><path d="M5 9.4l2.6 2.5L13 6.4" stroke="#0B1E33" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span>Compartilhe mapas em PDF em segundos</span></li><li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9" fill="#7FB24A"/><path d="M5 9.4l2.6 2.5L13 6.4" stroke="#0B1E33" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span>Imprima fichas de campo para a equipe</span></li></ul>
+<a class="btn btn-secondary" href="#contato" data-track="click_solicitar_demonstracao" data-where="plano_base">Solicitar demonstração</a></article>
+<article class="plan premium reveal"><p class="badge">Premium</p><h3>Precision Map</h3><p class="desc">Mapeamos sua fazenda a pé e de carro com receptor GPS, para a máxima precisão.</p>
+<p class="note">O plano Base usa imagem de satélite para desenhar os talhões: rápido e preciso o bastante para a maioria das fazendas. O Precision Map vai além: percorremos cada talhão com um receptor GPS de alta precisão, para limites mais justos.</p>
+<ul class="checks"><li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9" fill="#7FB24A"/><path d="M5 9.4l2.6 2.5L13 6.4" stroke="#0B1E33" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span>Cada talhão mapeado em campo com receptor GPS de alta precisão</span></li><li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9" fill="#7FB24A"/><path d="M5 9.4l2.6 2.5L13 6.4" stroke="#0B1E33" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span>Percorremos a fazenda inteira, sem adivinhar pelo ar</span></li><li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9" fill="#7FB24A"/><path d="M5 9.4l2.6 2.5L13 6.4" stroke="#0B1E33" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span>Limites mais justos do que a imagem de satélite permite</span></li><li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9" fill="#7FB24A"/><path d="M5 9.4l2.6 2.5L13 6.4" stroke="#0B1E33" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span>Variedades e soqueira configuradas para você no app</span></li><li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9" fill="#7FB24A"/><path d="M5 9.4l2.6 2.5L13 6.4" stroke="#0B1E33" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span>Cópias plastificadas do mapa, se você quiser</span></li><li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9" fill="#7FB24A"/><path d="M5 9.4l2.6 2.5L13 6.4" stroke="#0B1E33" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span>Entrega em poucos dias, conforme o tamanho da fazenda</span></li><li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9" fill="#7FB24A"/><path d="M5 9.4l2.6 2.5L13 6.4" stroke="#0B1E33" stroke-width="2" fill="none" stroke-linecap="round"/></svg><span>Inclui acesso completo ao app por um ano</span></li></ul>
+<a class="btn btn-primary" href="#contato" data-track="click_solicitar_demonstracao" data-where="plano_precision">Solicitar demonstração</a></article>
+</div>
+<aside class="tip reveal"><b>Dica</b><p>Muitas fazendas começam pelo plano Base e acrescentam o Precision Map na cana planta nova. A cada safra, o Caio mapeia o plantio novo em campo com o receptor. Com o tempo, a fazenda inteira fica em alta precisão, sem refazer tudo de uma vez.</p></aside>
+</div></section>
+
+<section class="band dark" aria-labelledby="como-t"><div class="wrap">
+<div class="sec-head reveal"><p class="eyebrow">Como funciona</p><h2 id="como-t">Começar é simples.</h2></div>
+<ol class="steps">
+<li class="reveal"><h3>Solicite uma demonstração</h3><p>Preencha um formulário curto com nome, telefone e e-mail. Só isso.</p></li>
+<li class="reveal"><h3>Entramos em contato</h3><p>O Caio liga para você pessoalmente. Sem call center e sem e-mail automático. Uma conversa de verdade sobre a sua fazenda.</p></li>
+<li class="reveal"><h3>Sua fazenda, configurada direito</h3><p>Seja pelo plano Base ou direto pelo Precision Map, deixamos tudo do jeito que você precisa.</p></li>
+</ol>
+<p style="margin-top:var(--s5)"><a class="btn btn-primary" href="#contato" data-track="click_solicitar_demonstracao" data-where="como_funciona">Solicitar demonstração</a></p>
+</div></section>
+
+<section class="band" data-depoimentos="3" hidden aria-labelledby="dep-t"><div class="wrap">
+<div class="sec-head"><p class="eyebrow">Depoimentos</p><h2 id="dep-t">Quem planta cana e usa o Yote.</h2></div><div class="quotes"></div></div></section>
+
+<section class="band mid" aria-labelledby="quem-t"><div class="wrap split rev">
+<div class="txt reveal"><p class="eyebrow">Quem está por trás</p><h2 id="quem-t">Construído a partir do campo.</h2>
+<p class="lead">Em 2019, antes de qualquer um pensar em software só para cana, Caio Phillipi já estava nos talhões, mapeando fazendas à mão.</p>
+<p class="lead" style="color:var(--ink)">Quando você fala com o Yote, você fala com o Caio. E quando precisa da fazenda configurada direito, ele vai até aí.</p>
+<p><a class="btn btn-secondary" href="sobre.html">Conheça nossa história</a></p></div>
+<div class="photo " role="img" aria-label="Espaço para a foto de Caio Phillipi no canavial"><svg viewBox="0 0 480 600" preserveAspectRatio="none" aria-hidden="true"><path d="M-200 600 L40 280" stroke="#4E7F25" stroke-width="5" opacity=".55"/><path d="M-160 600 L64 280" stroke="#4E7F25" stroke-width="5" opacity=".55"/><path d="M-120 600 L88 280" stroke="#4E7F25" stroke-width="5" opacity=".55"/><path d="M-80 600 L112 280" stroke="#4E7F25" stroke-width="5" opacity=".55"/><path d="M-40 600 L136 280" stroke="#4E7F25" stroke-width="5" opacity=".55"/><path d="M0 600 L160 280" stroke="#4E7F25" stroke-width="5" opacity=".55"/><path d="M40 600 L184 280" stroke="#4E7F25" stroke-width="5" opacity=".55"/><path d="M80 600 L208 280" stroke="#4E7F25" stroke-width="5" opacity=".55"/><path d="M120 600 L232 280" stroke="#4E7F25" stroke-width="5" opacity=".55"/><path d="M160 600 L256 280" stroke="#4E7F25" stroke-width="5" opacity=".55"/><path d="M200 600 L280 280" stroke="#4E7F25" stroke-width="5" opacity=".55"/><path d="M240 600 L304 280" stroke="#4E7F25" stroke-width="5" opacity=".55"/><path d="M280 600 L328 280" stroke="#4E7F25" stroke-width="5" opacity=".55"/><path d="M320 600 L352 280" stroke="#4E7F25" stroke-width="5" opacity=".55"/><path d="M360 600 L376 280" stroke="#4E7F25" stroke-width="5" opacity=".55"/><path d="M400 600 L400 280" stroke="#4E7F25" stroke-width="5" opacity=".55"/><circle cx="250" cy="250" r="44" fill="#0B1E33" opacity=".8"/><path d="M180 420 Q250 290 320 420 Z" fill="#0B1E33" opacity=".8"/></svg><p class="ph-tag">[PENDENTE: foto real /caio.jpg]</p></div>
+</div></section>
+
+<section class="band" aria-labelledby="faq-t"><div class="wrap">
+<div class="sec-head reveal"><p class="eyebrow">Perguntas frequentes</p><h2 id="faq-t">Perguntas de produtores.</h2></div>
+<div class="faq"><div class="item"><h3><button aria-expanded="false" aria-controls="faq0" id="faqb0">O Yote é só para a Louisiana?<span class="ico" aria-hidden="true">+</span></button></h3><div class="ans" id="faq0" role="region" aria-labelledby="faqb0"><div><p>Por enquanto, atendemos produtores da Louisiana. Se você está em outro estado, fale com a gente.</p></div></div></div><div class="item"><h3><button aria-expanded="false" aria-controls="faq1" id="faqb1">Qual a diferença entre o Yote Base e o Precision Map?<span class="ico" aria-hidden="true">+</span></button></h3><div class="ans" id="faq1" role="region" aria-labelledby="faqb1"><div><p><span class=pend>[PENDENTE: resposta do cliente]</span></p></div></div></div><div class="item"><h3><button aria-expanded="false" aria-controls="faq2" id="faqb2">Posso contratar os dois?<span class="ico" aria-hidden="true">+</span></button></h3><div class="ans" id="faq2" role="region" aria-labelledby="faqb2"><div><p><span class=pend>[PENDENTE: resposta do cliente]</span></p></div></div></div><div class="item"><h3><button aria-expanded="false" aria-controls="faq3" id="faqb3">O que preciso levar para começar?<span class="ico" aria-hidden="true">+</span></button></h3><div class="ans" id="faq3" role="region" aria-labelledby="faqb3"><div><p><span class=pend>[PENDENTE: resposta do cliente]</span></p></div></div></div><div class="item"><h3><button aria-expanded="false" aria-controls="faq4" id="faqb4">Quanto tempo leva o Precision Map?<span class="ico" aria-hidden="true">+</span></button></h3><div class="ans" id="faq4" role="region" aria-labelledby="faqb4"><div><p><span class=pend>[PENDENTE: resposta do cliente]</span></p></div></div></div><div class="item"><h3><button aria-expanded="false" aria-controls="faq5" id="faqb5">Recebo mapas impressos?<span class="ico" aria-hidden="true">+</span></button></h3><div class="ans" id="faq5" role="region" aria-labelledby="faqb5"><div><p><span class=pend>[PENDENTE: resposta do cliente]</span></p></div></div></div><div class="item"><h3><button aria-expanded="false" aria-controls="faq6" id="faqb6">Quantas pessoas podem usar?<span class="ico" aria-hidden="true">+</span></button></h3><div class="ans" id="faq6" role="region" aria-labelledby="faqb6"><div><p><span class=pend>[PENDENTE: resposta do cliente]</span></p></div></div></div><div class="item"><h3><button aria-expanded="false" aria-controls="faq7" id="faqb7">Funciona sem sinal de celular?<span class="ico" aria-hidden="true">+</span></button></h3><div class="ans" id="faq7" role="region" aria-labelledby="faqb7"><div><p><span class=pend>[PENDENTE: resposta do cliente]</span></p></div></div></div><div class="item"><h3><button aria-expanded="false" aria-controls="faq8" id="faqb8">Com quem falo se precisar de ajuda?<span class="ico" aria-hidden="true">+</span></button></h3><div class="ans" id="faq8" role="region" aria-labelledby="faqb8"><div><p><span class=pend>[PENDENTE: resposta do cliente]</span></p></div></div></div></div></div></section>
+
+<section class="band contact dark" id="contato" aria-labelledby="h-t"><div class="wrap">
+<div class="contact-info reveal"><p class="eyebrow">Fale com o Caio</p><h2 id="h-t">Pronto para ter sua fazenda no bolso?</h2><p class="lead">Peça uma demonstração e o Caio entra em contato pessoalmente.</p>
+<div class="cline"><span class="lbl">Telefone</span><a class="val" href="tel:+12255724195">(225) 572-4195</a><button type="button" class="copy" data-copy="(225) 572-4195">Copiar</button></div><div class="cline"><span class="lbl">E-mail</span><a class="val" href="mailto:support@yotefarmview.com">support@yotefarmview.com</a><button type="button" class="copy" data-copy="support@yotefarmview.com">Copiar</button></div></div>
+<form class="lead-form reveal" novalidate aria-labelledby="h-ft">
+<h3 id="h-ft">Solicitar demonstração</h3>
+<div class="field"><label for="h-nome">Nome</label><input id="h-nome" name="nome" autocomplete="name" required aria-describedby="h-nome-err"><p class="err" id="h-nome-err" aria-live="polite"></p></div>
+<div class="field"><label for="h-tel">Telefone</label><input id="h-tel" name="telefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(000) 000-0000" required aria-describedby="h-tel-err"><p class="err" id="h-tel-err" aria-live="polite"></p></div>
+<div class="field"><label for="h-email">E-mail</label><input id="h-email" name="email" type="email" autocomplete="email" required aria-describedby="h-email-err"><p class="err" id="h-email-err" aria-live="polite"></p></div>
+<div class="hp" aria-hidden="true"><label for="h-hp">Site da empresa</label><input id="h-hp" name="empresa_site" tabindex="-1" autocomplete="off"></div>
+<button type="submit" class="btn btn-primary" data-track="click_solicitar_demonstracao" data-where="formulario">Solicitar demonstração</button>
+<p class="status" role="status" tabindex="-1" hidden></p>
+<p class="form-micro">Sem compromisso. O Caio responde pessoalmente.</p>
+</form></div></section>
+</main>
+<footer class="ftr"><div class="wrap">
+<div class="ftr-grid">
+<div><a class="logo" href="./"><svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="7" fill="#7FB24A"/><path d="M6 25 L14 9 M12 27 L20 11 M18 28 L26 12" stroke="#0B1E33" stroke-width="3" stroke-linecap="round"/><circle cx="26" cy="24" r="3.4" fill="#0B1E33"/></svg><span>Yote Farmview</span></a><p>Feito para a cana-de-açúcar da Louisiana, desde 2019.</p><div class="socials"><a href="https://www.instagram.com/yotefarmview/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg></a><a href="https://www.facebook.com/profile.php?id=61587002848336" target="_blank" rel="noopener" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3c-2.8 0-4 1.8-4 4.5V11H7v4h3v6h4v-6h3l.5-4H14V9c0-.6.4-1 1-1z" fill="currentColor"/></svg></a><a href="https://www.linkedin.com/company/yote-farmview" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="4" height="12" fill="currentColor"/><circle cx="5" cy="5" r="2.2" fill="currentColor"/><path d="M10 9h4v2c.8-1.4 2.2-2.3 4-2.3 2.6 0 3.5 1.7 3.5 4.6V21h-4v-6.6c0-1.5-.4-2.4-1.7-2.4-1.5 0-1.8 1.1-1.8 2.4V21h-4z" fill="currentColor"/></svg></a><a href="https://www.youtube.com/@YoteFarmView" target="_blank" rel="noopener" aria-label="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4" fill="currentColor"/><path d="M10 9l5 3-5 3z" fill="#071525"/></svg></a><a href="https://www.tiktok.com/@yotefarmview" target="_blank" rel="noopener" aria-label="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h3c.3 2.2 1.7 3.6 4 4v3c-1.6 0-3-.5-4-1.2V15a6 6 0 11-6-6v3.2A2.8 2.8 0 1014 15z" fill="currentColor"/></svg></a></div></div>
+<div><h4>Navegação</h4><a href="#recursos">Recursos</a><a href="#planos">Planos</a><a href="sobre.html">Nossa história</a><a href="#contato">Contato</a><a href="https://www.yotefarmview.app" target="_blank" rel="noopener">Entrar no app</a></div>
+<div><h4>Contato</h4><div class="cline"><span class="lbl">Telefone</span><a class="val" href="tel:+12255724195">(225) 572-4195</a><button type="button" class="copy" data-copy="(225) 572-4195">Copiar</button></div><div class="cline"><span class="lbl">E-mail</span><a class="val" href="mailto:support@yotefarmview.com">support@yotefarmview.com</a><button type="button" class="copy" data-copy="support@yotefarmview.com">Copiar</button></div></div>
+<div><h4>Baixe o app</h4><a class="btn btn-secondary" style="color:#fff;border-color:#5C7DA6;justify-self:start" href="https://apps.apple.com/us/app/yote-farmview/id6758228754" target="_blank" rel="noopener" data-track="click_app_store" data-where="rodape">Baixar na App Store</a><svg class="qr" viewBox="0 0 21 21" role="img" aria-label="Espaço para o QR code da App Store, pendente"><rect width="21" height="21" fill="#fff"/><rect x="0" y="7" width="1" height="1" fill="#0B1E33"/><rect x="0" y="10" width="1" height="1" fill="#0B1E33"/><rect x="0" y="12" width="1" height="1" fill="#0B1E33"/><rect x="1" y="7" width="1" height="1" fill="#0B1E33"/><rect x="1" y="11" width="1" height="1" fill="#0B1E33"/><rect x="1" y="12" width="1" height="1" fill="#0B1E33"/><rect x="3" y="9" width="1" height="1" fill="#0B1E33"/><rect x="3" y="10" width="1" height="1" fill="#0B1E33"/><rect x="4" y="9" width="1" height="1" fill="#0B1E33"/><rect x="4" y="11" width="1" height="1" fill="#0B1E33"/><rect x="5" y="7" width="1" height="1" fill="#0B1E33"/><rect x="5" y="10" width="1" height="1" fill="#0B1E33"/><rect x="5" y="12" width="1" height="1" fill="#0B1E33"/><rect x="6" y="7" width="1" height="1" fill="#0B1E33"/><rect x="6" y="11" width="1" height="1" fill="#0B1E33"/><rect x="6" y="12" width="1" height="1" fill="#0B1E33"/><rect x="8" y="0" width="1" height="1" fill="#0B1E33"/><rect x="8" y="4" width="1" height="1" fill="#0B1E33"/><rect x="8" y="5" width="1" height="1" fill="#0B1E33"/><rect x="8" y="9" width="1" height="1" fill="#0B1E33"/><rect x="8" y="10" width="1" height="1" fill="#0B1E33"/><rect x="8" y="14" width="1" height="1" fill="#0B1E33"/><rect x="8" y="15" width="1" height="1" fill="#0B1E33"/><rect x="8" y="19" width="1" height="1" fill="#0B1E33"/><rect x="8" y="20" width="1" height="1" fill="#0B1E33"/><rect x="9" y="1" width="1" height="1" fill="#0B1E33"/><rect x="9" y="4" width="1" height="1" fill="#0B1E33"/><rect x="9" y="6" width="1" height="1" fill="#0B1E33"/><rect x="9" y="9" width="1" height="1" fill="#0B1E33"/><rect x="9" y="11" width="1" height="1" fill="#0B1E33"/><rect x="9" y="14" width="1" height="1" fill="#0B1E33"/><rect x="9" y="16" width="1" height="1" fill="#0B1E33"/><rect x="9" y="19" width="1" height="1" fill="#0B1E33"/><rect x="10" y="0" width="1" height="1" fill="#0B1E33"/><rect x="10" y="2" width="1" height="1" fill="#0B1E33"/><rect x="10" y="5" width="1" height="1" fill="#0B1E33"/><rect x="10" y="7" width="1" height="1" fill="#0B1E33"/><rect x="10" y="10" width="1" height="1" fill="#0B1E33"/><rect x="10" y="12" width="1" height="1" fill="#0B1E33"/><rect x="10" y="15" width="1" height="1" fill="#0B1E33"/><rect x="10" y="17" width="1" height="1" fill="#0B1E33"/><rect x="10" y="20" width="1" height="1" fill="#0B1E33"/><rect x="11" y="1" width="1" height="1" fill="#0B1E33"/><rect x="11" y="2" width="1" height="1" fill="#0B1E33"/><rect x="11" y="6" width="1" height="1" fill="#0B1E33"/><rect x="11" y="7" width="1" height="1" fill="#0B1E33"/><rect x="11" y="11" width="1" height="1" fill="#0B1E33"/><rect x="11" y="12" width="1" height="1" fill="#0B1E33"/><rect x="11" y="16" width="1" height="1" fill="#0B1E33"/><rect x="11" y="17" width="1" height="1" fill="#0B1E33"/><rect x="13" y="0" width="1" height="1" fill="#0B1E33"/><rect x="13" y="4" width="1" height="1" fill="#0B1E33"/><rect x="13" y="5" width="1" height="1" fill="#0B1E33"/><rect x="13" y="9" width="1" height="1" fill="#0B1E33"/><rect x="13" y="10" width="1" height="1" fill="#0B1E33"/><rect x="13" y="14" width="1" height="1" fill="#0B1E33"/><rect x="13" y="15" width="1" height="1" fill="#0B1E33"/><rect x="13" y="19" width="1" height="1" fill="#0B1E33"/><rect x="13" y="20" width="1" height="1" fill="#0B1E33"/><rect x="14" y="9" width="1" height="1" fill="#0B1E33"/><rect x="14" y="11" width="1" height="1" fill="#0B1E33"/><rect x="14" y="14" width="1" height="1" fill="#0B1E33"/><rect x="14" y="16" width="1" height="1" fill="#0B1E33"/><rect x="14" y="19" width="1" height="1" fill="#0B1E33"/><rect x="15" y="7" width="1" height="1" fill="#0B1E33"/><rect x="15" y="10" width="1" height="1" fill="#0B1E33"/><rect x="15" y="12" width="1" height="1" fill="#0B1E33"/><rect x="15" y="15" width="1" height="1" fill="#0B1E33"/><rect x="15" y="17" width="1" height="1" fill="#0B1E33"/><rect x="15" y="20" width="1" height="1" fill="#0B1E33"/><rect x="16" y="7" width="1" height="1" fill="#0B1E33"/><rect x="16" y="11" width="1" height="1" fill="#0B1E33"/><rect x="16" y="12" width="1" height="1" fill="#0B1E33"/><rect x="16" y="16" width="1" height="1" fill="#0B1E33"/><rect x="16" y="17" width="1" height="1" fill="#0B1E33"/><rect x="18" y="9" width="1" height="1" fill="#0B1E33"/><rect x="18" y="10" width="1" height="1" fill="#0B1E33"/><rect x="18" y="14" width="1" height="1" fill="#0B1E33"/><rect x="18" y="15" width="1" height="1" fill="#0B1E33"/><rect x="18" y="19" width="1" height="1" fill="#0B1E33"/><rect x="18" y="20" width="1" height="1" fill="#0B1E33"/><rect x="19" y="9" width="1" height="1" fill="#0B1E33"/><rect x="19" y="11" width="1" height="1" fill="#0B1E33"/><rect x="19" y="14" width="1" height="1" fill="#0B1E33"/><rect x="19" y="16" width="1" height="1" fill="#0B1E33"/><rect x="19" y="19" width="1" height="1" fill="#0B1E33"/><rect x="20" y="7" width="1" height="1" fill="#0B1E33"/><rect x="20" y="10" width="1" height="1" fill="#0B1E33"/><rect x="20" y="12" width="1" height="1" fill="#0B1E33"/><rect x="20" y="15" width="1" height="1" fill="#0B1E33"/><rect x="20" y="17" width="1" height="1" fill="#0B1E33"/><rect x="20" y="20" width="1" height="1" fill="#0B1E33"/><rect x="0" y="0" width="7" height="7" fill="#0B1E33"/><rect x="1" y="1" width="5" height="5" fill="#fff"/><rect x="2" y="2" width="3" height="3" fill="#0B1E33"/><rect x="14" y="0" width="7" height="7" fill="#0B1E33"/><rect x="15" y="1" width="5" height="5" fill="#fff"/><rect x="16" y="2" width="3" height="3" fill="#0B1E33"/><rect x="0" y="14" width="7" height="7" fill="#0B1E33"/><rect x="1" y="15" width="5" height="5" fill="#fff"/><rect x="2" y="16" width="3" height="3" fill="#0B1E33"/></svg><p class="pend" style="justify-self:start">[PENDENTE: QR real]</p></div>
+</div>
+<div class="ftr-bottom"><p>© 2026 Yote FarmView. Todos os direitos reservados.</p><nav aria-label="Legal"><a href="https://www.yotefarmview.com/privacy-policy" target="_blank" rel="noopener">Privacidade</a><a href="https://www.yotefarmview.com/terms-of-service" target="_blank" rel="noopener">Termos de uso</a><a href="https://www.yotefarmview.com/cookie-policy" target="_blank" rel="noopener">Cookies</a><a href="https://www.yotefarmview.com/data-privacy" target="_blank" rel="noopener">Proteção de dados</a></nav>
+<div class="lang" aria-label="Idioma"><a href="https://www.yotefarmview.com/" target="_blank" rel="noopener" hreflang="en" lang="en">EN</a><span aria-current="true">PT</span><a href="https://www.yotefarmview.com/es" target="_blank" rel="noopener" hreflang="es" lang="es">ES</a></div></div>
+</div></footer>
+<script>document.body.dataset.page="home";document.documentElement.lang = "pt-BR";
+/* === Configuração === */
+const LEAD_ENDPOINT = ""; // Site definitivo: URL do serviço de e-mail/CRM que recebe {nome, telefone, email, criadoEm}.
+const CLIENT_PHONE = "(225) 572-4195";
+
+/* Depoimentos: a seção só aparece com pelo menos 1 depoimento real.
+   Exemplos de formato, mantidos comentados até o cliente fornecer:
+   // { texto: "[PENDENTE: coletar com o cliente]", nome: "[PENDENTE]", fazenda: "[PENDENTE]", regiao: "[PENDENTE]" },
+   // { texto: "[PENDENTE: coletar com o cliente]", nome: "[PENDENTE]", fazenda: "[PENDENTE]", regiao: "[PENDENTE]" },
+   // { texto: "[PENDENTE: coletar com o cliente]", nome: "[PENDENTE]", fazenda: "[PENDENTE]", regiao: "[PENDENTE]" },
+*/
+const DEPOIMENTOS = [];
+
+/* === Eventos (prontos para GA4 / Meta Pixel no site definitivo) === */
+window.dataLayer = window.dataLayer || [];
+function track(name, params){ try{ window.dataLayer.push(Object.assign({event:name}, params||{})); document.dispatchEvent(new CustomEvent("yote:"+name,{detail:params||{}})); }catch(e){} }
+document.addEventListener("click", e => {
+  const a = e.target.closest("[data-track]"); if (a) track(a.dataset.track, {local: a.dataset.where || ""});
+});
+
+document.documentElement.classList.add("js");
+
+/* Menu */
+const burger = document.querySelector(".burger"), nav = document.getElementById("menu");
+if (burger) {
+  burger.addEventListener("click", () => { const o = nav.classList.toggle("open"); burger.setAttribute("aria-expanded", o); burger.setAttribute("aria-label", o ? "Fechar menu" : "Abrir menu"); });
+  nav.addEventListener("click", e => { if (e.target.closest("a")) { nav.classList.remove("open"); burger.setAttribute("aria-expanded","false"); } });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && nav.classList.contains("open")) { nav.classList.remove("open"); burger.setAttribute("aria-expanded","false"); burger.focus(); } });
+}
+
+/* Copiar */
+document.querySelectorAll(".copy").forEach(b => b.addEventListener("click", () => {
+  const v = b.dataset.copy, done = () => { const t = b.textContent; b.textContent = "Copiado"; setTimeout(() => b.textContent = t, 1600); };
+  const fallback = () => { const el = b.parentElement.querySelector(".val"); const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "Selecionado, use Ctrl+C"; setTimeout(() => b.textContent = "Copiar", 2200); };
+  try { navigator.clipboard.writeText(v).then(done, fallback); } catch(e){ fallback(); }
+}));
+
+/* FAQ */
+document.querySelectorAll(".faq button").forEach(btn => btn.addEventListener("click", () => {
+  const open = btn.getAttribute("aria-expanded") === "true";
+  btn.setAttribute("aria-expanded", !open);
+  document.getElementById(btn.getAttribute("aria-controls")).classList.toggle("open", !open);
+}));
+
+/* Depoimentos */
+document.querySelectorAll("[data-depoimentos]").forEach(sec => {
+  const reais = DEPOIMENTOS.filter(d => d && d.texto && !/PENDENTE/.test(d.texto + d.nome));
+  if (!reais.length) { sec.hidden = true; return; }
+  const box = sec.querySelector(".quotes"), max = +sec.dataset.depoimentos || 3;
+  reais.slice(0, max).forEach(d => {
+    const f = document.createElement("figure"); f.className = "quote";
+    const q = document.createElement("blockquote"); q.textContent = "“" + d.texto + "”";
+    const c = document.createElement("cite"); c.textContent = d.nome;
+    const s = document.createElement("span"); s.textContent = d.fazenda + " · " + d.regiao; c.append(s);
+    f.append(q, c); box.append(f);
+  });
+  sec.hidden = false;
+});
+
+/* Entrada das seções: visível por padrão, desliza só quando entra na tela */
+if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.remove("pre"); io.unobserve(en.target); } }), {threshold:.12});
+  document.querySelectorAll(".reveal").forEach(el => { const r = el.getBoundingClientRect(); if (r.top > innerHeight) { el.classList.add("pre"); io.observe(el); } });
+}
+
+/* Contador nos números (só valores confirmados) */
+document.querySelectorAll("[data-count]").forEach(el => {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+  const end = +el.dataset.count, start = +el.dataset.from || 0, suf = el.dataset.suffix || "";
+  const io = new IntersectionObserver(([en]) => { if (!en.isIntersecting) return; io.disconnect();
+    const t0 = performance.now(); const step = t => { const p = Math.min(1, (t - t0) / 1100), e = 1 - Math.pow(1 - p, 3); el.textContent = Math.round(start + (end - start) * e) + suf; if (p < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); });
+  io.observe(el);
+});
+
+/* === Formulário === */
+let dbPromise = null;
+function getDb(){ if (!dbPromise) dbPromise = (window.claude && window.claude.use ? window.claude.use("db") : Promise.resolve(null)).catch(() => null); return dbPromise; }
+getDb();
+
+function maskPhone(v){ const d = v.replace(/\D/g, "").slice(0, 10); if (d.length < 4) return d.length ? "(" + d : ""; if (d.length < 7) return "(" + d.slice(0,3) + ") " + d.slice(3); return "(" + d.slice(0,3) + ") " + d.slice(3,6) + "-" + d.slice(6); }
+
+document.querySelectorAll("form.lead-form").forEach(form => {
+  const tel = form.querySelector("[name=telefone]");
+  tel.addEventListener("input", () => { tel.value = maskPhone(tel.value); });
+  const status = form.querySelector(".status"), btn = form.querySelector("button[type=submit]");
+  const rules = {
+    nome: v => v.trim().length >= 2 ? "" : "Escreva seu nome, com pelo menos 2 letras.",
+    telefone: v => v.replace(/\D/g, "").length === 10 ? "" : "Digite o telefone com DDD, no formato (000) 000-0000.",
+    email: v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? "" : "Confira o e-mail. Ele precisa ter @ e um domínio, como nome@fazenda.com."
+  };
+  const check = name => { const inp = form.elements[name], msg = rules[name](inp.value), err = form.querySelector("#" + inp.id + "-err"); err.textContent = msg; inp.setAttribute("aria-invalid", msg ? "true" : "false"); return !msg; };
+  Object.keys(rules).forEach(n => form.elements[n].addEventListener("blur", () => { if (form.elements[n].value) check(n); }));
+
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const ok = Object.keys(rules).map(check).every(Boolean);
+    if (!ok) { form.querySelector("[aria-invalid=true]").focus(); return; }
+    if (form.elements.empresa_site.value) return; // honeypot
+    const lead = { nome: form.elements.nome.value.trim(), telefone: form.elements.telefone.value, email: form.elements.email.value.trim(), pagina: document.body.dataset.page, criadoEm: new Date().toISOString() };
+    btn.setAttribute("aria-busy", "true"); btn.textContent = "Enviando…"; status.hidden = true;
+    let mode = "demo";
+    try {
+      if (LEAD_ENDPOINT) {
+        const r = await fetch(LEAD_ENDPOINT, { method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(lead) });
+        if (!r.ok) throw new Error("http " + r.status); mode = "sent";
+      } else {
+        const db = await getDb();
+        if (db) { await db.collection("leads").add(lead); mode = "sent"; }
+      }
+      status.className = "status ok";
+      status.innerHTML = mode === "sent" ? "Recebemos seu pedido. O Caio entra em contato em breve." : "Tudo certo com os dados.<small>Formulário de demonstração, nenhum dado foi enviado.</small>";
+      if (mode === "sent") { track("lead_enviado", {pagina: lead.pagina}); form.reset(); }
+    } catch (err) {
+      status.className = "status bad";
+      status.innerHTML = "";
+      status.append("Não conseguimos enviar agora. Tente de novo em instantes ou ligue para " + CLIENT_PHONE + ".");
+    }
+    status.hidden = false; status.focus();
+    btn.removeAttribute("aria-busy"); btn.textContent = "Solicitar demonstração";
+  });
+});
+</script>
