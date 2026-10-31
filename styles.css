@@ -458,3 +458,7 @@ body.menu-open{overflow:hidden}
 /* hero stage fades in by CSS so the LCP image never waits on JS */
 .hero-stage{animation:stage-in .7s var(--ease) .1s both}
 @keyframes stage-in{from{opacity:0;transform:translateY(16px)}}
+
+/* mobile LCP: text and hero image paint immediately */
+@media (max-width:900px){.line-in{transform:none;animation:none}.hero-stage{animation:none}.hero-bg{background-image:url(public/hero-bg-sm.jpg)}.contours path{animation-duration:1.2s}}
+@media (max-width:900px){.hero .reveal{opacity:1;transform:none;filter:none;transition:none}}

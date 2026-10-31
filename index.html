@@ -9,8 +9,9 @@
 <link rel="icon" href="public/favicon-dark.png" media="(prefers-color-scheme: dark)">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="public/screenshots/map.jpg" fetchpriority="high">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap"></noscript>
+<link rel="preload" as="image" href="public/screenshots/map-sm.jpg" imagesrcset="public/screenshots/map-sm.jpg 400w, public/screenshots/map.jpg 600w" imagesizes="(max-width:900px) 240px, 300px" fetchpriority="high">
 <link rel="stylesheet" href="styles.css">
 <noscript><style>.reveal{opacity:1;transform:none;filter:none}</style></noscript>
 </head>
@@ -70,7 +71,7 @@
 
     <div class="hero-stage">
       <div class="phone tilt" data-tilt>
-        <div class="phone-core"><img src="public/screenshots/map.jpg" alt="Mapa da fazenda com talhões coloridos por soqueira" width="1206" height="2622" fetchpriority="high"></div>
+        <div class="phone-core"><img src="public/screenshots/map-sm.jpg" srcset="public/screenshots/map-sm.jpg 400w, public/screenshots/map.jpg 600w" sizes="(max-width:900px) 240px, 300px" alt="Mapa da fazenda com talhões coloridos por soqueira" width="1206" height="2622" fetchpriority="high"></div>
       </div>
       <div class="chip chip-a"><i class="dot"></i>Soqueira</div>
       <div class="chip chip-b"><i class="dot dot-b"></i>5,6 ha</div>
@@ -235,6 +236,6 @@
   </div>
 </footer>
 
-<script src="main.js"></script>
+<script src="main.js" defer></script>
 </body>
 </html>
