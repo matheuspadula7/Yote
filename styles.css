@@ -429,3 +429,12 @@ body.menu-open{overflow:hidden}
   /* statement stays fully readable */
   .problem .w,.problem .w.lit{color:#fff}
 }
+
+/* faster entrances */
+.reveal{transform:translateY(18px);filter:blur(4px);transition:opacity .55s var(--ease),transform .65s var(--ease),filter .55s var(--ease);transition-delay:calc(var(--d,0)*50ms)}
+.reveal.in{transform:none;filter:none}
+.line-in{animation-duration:.8s;animation-delay:.05s}
+.line:nth-child(2) .line-in{animation-delay:.14s}
+.contours path{animation-duration:2s}
+.problem .w{transition-duration:.25s}
+@media (max-width:900px){.reveal{filter:none;transform:translateY(12px);transition-duration:.45s,.5s,.45s}.reveal.in{transform:none}}
