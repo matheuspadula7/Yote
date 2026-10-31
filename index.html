@@ -24,11 +24,21 @@
     <a href="sobre.html">Quem somos</a>
     <a href="demo.html">Contato</a>
   </nav>
-  <a class="btn btn-sm magnetic" href="demo.html">
+  <a class="btn btn-sm magnetic nav-cta" href="demo.html">
     <span class="btn-label">Solicitar demo</span>
     <span class="btn-icon" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg></span>
   </a>
+  <button class="menu-btn" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><i></i><i></i></button>
 </header>
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Menu">
+    <a href="funcionalidades.html">Funcionalidades</a>
+    <a href="index.html#plano">Plano</a>
+    <a href="sobre.html">Quem somos</a>
+    <a href="demo.html">Contato</a>
+  </nav>
+  <a class="btn btn-light magnetic" href="demo.html"><span class="btn-label">Solicitar demo</span><span class="btn-icon" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg></span></a>
+</div>
 
 <main id="top">
 
@@ -42,7 +52,6 @@
     </svg>
 
     <div class="hero-copy">
-      <p class="pill reveal">Cana-de-açúcar, desde 2019</p>
       <h1 class="hero-title" aria-label="Feito para a cana. Simples de verdade.">
         <span class="line"><span class="line-in">Feito para a cana.</span></span>
         <span class="line"><span class="line-in"><em>Simples</em> de verdade.</span></span>
@@ -89,21 +98,25 @@
             <button type="button" data-view="map" class="on">Soqueira</button>
             <button type="button" data-view="ripener">Maturador</button>
           </div>
+          <div class="feature-phone" data-m="map"><div class="phone"><div class="phone-core"><img src="public/screenshots/map.png" alt="" loading="lazy" width="1206" height="2622"></div></div></div>
         </li>
         <li class="feature" data-img="split" data-alt="Talhão com duas variedades divididas">
           <h3>Variedades divididas</h3>
           <p class="feature-lead">Um talhão, duas variedades. Sem problema.</p>
           <p>Trace uma linha de divisão pelo número de linhas e identifique cada lado separadamente. Seu mapa continua preciso mesmo quando você planta mais de uma variedade no mesmo talhão.</p>
+          <div class="feature-phone" data-m="split"><div class="phone"><div class="phone-core"><img src="public/screenshots/split.png" alt="" loading="lazy" width="1206" height="2622"></div></div></div>
         </li>
         <li class="feature" data-img="list" data-alt="Lista de talhões pronta para exportar em PDF">
           <h3>Exportar e compartilhar</h3>
           <p class="feature-lead">Envie um mapa limpo em segundos.</p>
           <p>Gere um mapa profissional em PDF com a marca Yote e compartilhe com sua equipe, o dono da terra ou o agrônomo em um toque. Sem imprimir, sem escanear, sem explicar.</p>
+          <div class="feature-phone" data-m="list"><div class="phone"><div class="phone-core"><img src="public/screenshots/list.png" alt="" loading="lazy" width="1206" height="2622"></div></div></div>
         </li>
         <li class="feature" data-img="products" data-alt="Registro de aplicação com produto, dose e unidade">
           <h3>Registros de aplicação</h3>
           <p class="feature-lead">Registre cada aplicação direto do campo.</p>
           <p>Anote o produto aplicado, a dose e a unidade, tudo vinculado aos talhões exatos onde foi aplicado. Um histórico completo de cada aplicação, sempre no seu bolso.</p>
+          <div class="feature-phone" data-m="products"><div class="phone"><div class="phone-core"><img src="public/screenshots/products.png" alt="" loading="lazy" width="1206" height="2622"></div></div></div>
         </li>
       </ol>
 

@@ -45,7 +45,7 @@
     ticking = true;
     requestAnimationFrame(() => {
       const y = scrollY;
-      nav.classList.toggle('hide', y > lastY && y > 400);
+      nav.classList.toggle('hide', y > lastY && y > 400 && !document.body.classList.contains('menu-open'));
       lastY = y; ticking = false;
     });
   }, { passive: true });
@@ -131,4 +131,23 @@
     location.href = `mailto:support@yotefarmview.com?subject=${encodeURIComponent('Solicitar demonstração')}&body=${encodeURIComponent(body)}`;
   });
   form.addEventListener('input', (e) => e.target.removeAttribute('aria-invalid'));
+})();
+
+// mobile menu
+(() => {
+  const btn = document.querySelector('.menu-btn');
+  const menu = document.getElementById('menu');
+  if (!btn || !menu) return;
+  const set = (open) => {
+    btn.setAttribute('aria-expanded', open);
+    btn.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+    document.body.classList.toggle('menu-open', open);
+    document.getElementById('nav').classList.remove('hide');
+    if (open) menu.hidden = false;
+    menu.classList.toggle('open', open);
+  };
+  btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+  menu.addEventListener('click', (e) => { if (e.target.closest('a')) set(false); });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+  matchMedia('(min-width: 901px)').addEventListener('change', (e) => { if (e.matches) set(false); });
 })();
