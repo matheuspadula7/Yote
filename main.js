@@ -37,19 +37,6 @@
   addEventListener('scroll', () => requestAnimationFrame(paint), { passive: true });
   paint();
 
-  // nav hides on scroll down, returns on scroll up
-  const nav = document.getElementById('nav');
-  let lastY = scrollY, ticking = false;
-  addEventListener('scroll', () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      const y = scrollY;
-      nav.classList.toggle('hide', y > lastY && y > 400 && !document.body.classList.contains('menu-open'));
-      lastY = y; ticking = false;
-    });
-  }, { passive: true });
-
   // feature <-> phone sync
   const items = [...document.querySelectorAll('.feature')];
   const shots = [...document.querySelectorAll('.shot')];
@@ -142,7 +129,6 @@
     btn.setAttribute('aria-expanded', open);
     btn.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
     document.body.classList.toggle('menu-open', open);
-    document.getElementById('nav').classList.remove('hide');
     if (open) menu.hidden = false;
     menu.classList.toggle('open', open);
   };
