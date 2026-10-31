@@ -299,3 +299,60 @@ details[open] .ans>p{opacity:1;padding-bottom:28px}
   .feat-row.flip .feat-text{order:0}
   .form-core{padding:28px 24px}
 }
+
+/* mobile pass: gutters, vertical rhythm, lighter motion */
+@media (max-width:900px){
+  .nav{width:calc(100% - 24px);inset-block-start:12px;padding:7px 7px 7px 16px}
+  .brand-mark{width:92px}
+  .hero,.problem,.features,.plan,.story,.faq,.page-hero,.about-split,.timeline-sec,.principles,.feat-row,.feat-row.flip,.foot{padding-inline:20px}
+  .hero{min-height:auto;padding-top:108px;padding-bottom:64px;gap:48px}
+  .hero-title{margin-bottom:20px}
+  .lede{font-size:1.05rem;margin-bottom:28px}
+  .hero-actions{margin-bottom:32px}
+  .hero-stage .phone{width:min(240px,64vw)}
+  .page-hero{padding-top:112px;padding-bottom:56px}
+  .problem{padding-block:72px;gap:28px}
+  .features{padding-block:72px}
+  .features-head h2{margin-bottom:36px}
+  .features-grid{gap:24px}
+  .features-stage .phone{width:168px}
+  .feature{padding:28px 0 32px}
+  .feature h3{font-size:1.6rem}
+  .plan{padding-block:72px;gap:48px}
+  .demo-steps{padding-top:8px}
+  .plan-copy>p{margin-bottom:32px}
+  .steps{gap:28px}
+  .plan-card{padding:6px;border-radius:28px}
+  .plan-card-in{padding:30px 22px 26px;border-radius:23px}
+  .plan-card h3{font-size:1.9rem}
+  .ticks{margin-bottom:28px}
+  .ticks li{padding:12px 0 12px 28px;font-size:.95rem}
+  .story{padding-block:24px 72px;gap:36px}
+  .about-split{padding-block:16px 72px;gap:40px}
+  .faq{padding-block:16px 72px;gap:28px}
+  summary{padding:20px 0;font-size:1.02rem;gap:16px}
+  .timeline-sec{padding-block:72px}
+  .timeline-sec h2,.principles h2{margin-bottom:36px}
+  .timeline li{padding:26px 0}
+  .principles{padding-block:72px 80px}
+  .feat-row,.feat-row.flip{padding-block:56px;gap:36px}
+  .feat-phone .phone{width:min(240px,64vw)}
+  .cta{padding-inline:12px;padding-bottom:12px}
+  .cta-in{padding:56px 24px 52px;border-radius:26px;gap:18px}
+  .demo-hero{min-height:auto;gap:40px}
+  .form-shell{padding:6px;border-radius:28px}
+  .form-core{padding:26px 20px;border-radius:23px;gap:18px}
+  .foot{padding-block:48px 28px}
+  .foot-top{gap:32px;padding-bottom:36px}
+  .photo-frame{padding:6px;border-radius:26px}
+  .photo-frame img{border-radius:20px}
+
+  /* motion: shorter travel, no blur, no ambient loops */
+  .reveal{transform:translateY(16px);filter:none;transition-duration:.7s,.8s,.7s}
+  .reveal.in{transform:none}
+  .hero-stage .phone,.chip,.hero-bg,.cta-in::before{animation:none}
+  .chip{display:none}
+  .phone{transition:none}
+  .shot{filter:none;transform:none}
+  .feature,.feature.is-active{transform:none}
+}
