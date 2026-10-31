@@ -454,3 +454,7 @@ body.menu-open{overflow:hidden}
   .about-split .story-copy{column-count:1}
   .about-split .story-copy .story-end{font-size:1.5rem}
 }
+
+/* hero stage fades in by CSS so the LCP image never waits on JS */
+.hero-stage{animation:stage-in .7s var(--ease) .1s both}
+@keyframes stage-in{from{opacity:0;transform:translateY(16px)}}
