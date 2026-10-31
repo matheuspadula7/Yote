@@ -31,7 +31,7 @@
     bar.style.setProperty('--p', scrollY / (document.documentElement.scrollHeight - innerHeight));
     if (!big) return;
     const r = big.getBoundingClientRect();
-    const k = Math.min(1, Math.max(0, (innerHeight * 0.85 - r.top) / (innerHeight * 0.55)));
+    const k = Math.min(1, Math.max(0, (innerHeight * 0.9 - r.top) / (innerHeight * 0.4)));
     words.forEach((w, i) => w.classList.toggle('lit', i / words.length < k));
   };
   addEventListener('scroll', () => requestAnimationFrame(paint), { passive: true });

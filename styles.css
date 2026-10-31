@@ -224,7 +224,6 @@ details[open] .ans>p{opacity:1;padding-bottom:28px}
 .problem-big{font-size:clamp(2rem,4.2vw,3.6rem)}
 .problem-big .w{opacity:.18;transition:opacity .5s var(--ease)}
 .problem-big .w.lit{opacity:1}
-.problem-big span .w.lit{opacity:.7}
 .feature{transition:opacity .6s var(--ease),transform .8s var(--ease)}
 .feature.is-active{transform:translateX(8px)}
 @media (max-width:900px){.feature.is-active{transform:none}}
@@ -378,7 +377,7 @@ body.menu-open{overflow:hidden}
 /* blue sections */
 .problem,.story,.timeline-sec{background:var(--navy);color:var(--bone);border:0}
 .problem-big,.story h2,.timeline-sec h2,.timeline h3{color:var(--bone)}
-.problem-big span{color:rgba(244,241,232,.62)}
+.problem-big span{color:inherit}
 .problem-body,.story-copy,.timeline p{color:rgba(244,241,232,.74)}
 .story-end{color:var(--bone)}
 .story .photo-frame{background:rgba(244,241,232,.08);box-shadow:0 0 0 1px rgba(244,241,232,.14)}
@@ -386,8 +385,8 @@ body.menu-open{overflow:hidden}
 .story .link{color:var(--bone)}
 .when{color:var(--accent-dark)}
 .timeline li,.timeline li:last-child{border-color:rgba(244,241,232,.16)}
-.problem .w{opacity:.22}.problem .w.lit{opacity:1}
-.problem-big span .w.lit{opacity:.62}
+.problem .w{opacity:1;color:rgba(244,241,232,.2);transition:color .5s var(--ease)}
+.problem .w.lit{color:#fff}
 ::selection{background:var(--accent);color:var(--bone)}
 .problem::selection,.story ::selection{background:var(--bone);color:var(--navy)}
 
@@ -428,6 +427,5 @@ body.menu-open{overflow:hidden}
   .feature-phone{display:block;margin-top:28px}
   .feature-phone .phone{width:min(220px,62vw);margin-inline:auto}
   /* statement stays fully readable */
-  .problem .w,.problem .w.lit{opacity:1}
-  .problem-big span .w,.problem-big span .w.lit{opacity:.7}
+  .problem .w,.problem .w.lit{color:#fff}
 }
