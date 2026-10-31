@@ -438,3 +438,19 @@ body.menu-open{overflow:hidden}
 .contours path{animation-duration:2s}
 .problem .w{transition-duration:.25s}
 @media (max-width:900px){.reveal{filter:none;transform:translateY(12px);transition-duration:.45s,.5s,.45s}.reveal.in{transform:none}}
+
+/* quem somos: photo in hero, story in two editorial columns */
+.page-hero.has-photo{display:grid;grid-template-columns:1.15fr .85fr;gap:72px;align-items:center;padding-bottom:80px}
+.page-hero .hero-bg{opacity:.1}
+.hero-photo{justify-self:end;width:min(100%,400px);margin:0}
+.hero-photo .photo-frame img{aspect-ratio:4/5}
+.about-split{grid-template-columns:1fr;padding-top:0}
+.about-split .story-copy{max-width:none;column-count:2;column-gap:72px;display:block;color:var(--mute)}
+.about-split .story-copy p{margin-bottom:22px;break-inside:avoid}
+.about-split .story-copy .story-end{column-span:all;margin:36px 0 0;font-size:1.9rem}
+@media (max-width:900px){
+  .page-hero.has-photo{grid-template-columns:1fr;gap:40px;padding-bottom:40px}
+  .hero-photo{justify-self:start;width:min(100%,340px)}
+  .about-split .story-copy{column-count:1}
+  .about-split .story-copy .story-end{font-size:1.5rem}
+}
