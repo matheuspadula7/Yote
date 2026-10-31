@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yote Farmview — Feito para a cana-de-açúcar</title>
+<meta name="description" content="O jeito mais simples de gerenciar seus talhões de cana. Mapas por cores, variedades divididas, PDF em um toque e registros de aplicação, direto no celular.">
+<link rel="icon" href="public/favicon-light.png" media="(prefers-color-scheme: light)">
+<link rel="icon" href="public/favicon-dark.png" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<noscript><style>.reveal{opacity:1;transform:none;filter:none}</style></noscript>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top" aria-label="Yote Farmview, início"><img class="brand-mark" src="public/brand-navy.png" alt="Yote Farmview" width="958" height="422"></a>
+  <nav class="nav-links" aria-label="Principal">
+    <a href="funcionalidades.html">Funcionalidades</a>
+    <a href="index.html#plano">Plano</a>
+    <a href="sobre.html">Quem somos</a>
+    <a href="demo.html">Contato</a>
+  </nav>
+  <a class="btn btn-sm magnetic" href="demo.html">
+    <span class="btn-label">Solicitar demo</span>
+    <span class="btn-icon" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg></span>
+  </a>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <svg class="contours" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path pathLength="1" d="M-40 640C180 560 300 700 520 640S860 470 1060 540s300 90 440 20"/>
+      <path pathLength="1" d="M-40 700C190 620 320 760 540 700S880 530 1080 600s300 90 440 20"/>
+      <path pathLength="1" d="M-40 760C200 680 340 820 560 760S900 590 1100 660s300 90 440 20"/>
+      <path pathLength="1" d="M-40 820C210 740 360 880 580 820S920 650 1120 720s300 90 440 20"/>
+    </svg>
+
+    <div class="hero-copy">
+      <p class="pill reveal">Cana-de-açúcar, desde 2019</p>
+      <h1 class="hero-title" aria-label="Feito para a cana. Simples de verdade.">
+        <span class="line"><span class="line-in">Feito para a cana.</span></span>
+        <span class="line"><span class="line-in"><em>Simples</em> de verdade.</span></span>
+      </h1>
+      <p class="lede reveal" style="--d:2">O Yote Farmview é o jeito mais simples de gerenciar seus talhões de cana. Tudo o que você precisa, direto no celular. Sem treinamento, sem manual, sem dor de cabeça.</p>
+      <div class="hero-actions reveal" style="--d:3">
+        <a class="btn magnetic" href="demo.html">
+          <span class="btn-label">Solicitar uma demonstração</span>
+          <span class="btn-icon" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg></span>
+        </a>
+        <a class="link" href="funcionalidades.html">Ver o app</a>
+      </div>
+      <p class="roots reveal" style="--d:4">Raízes na Louisiana. Primeiro app de mapeamento só para cana nos EUA.</p>
+    </div>
+
+    <div class="hero-stage reveal" style="--d:2">
+      <div class="phone tilt" data-tilt>
+        <div class="phone-core"><img src="public/screenshots/map.png" alt="Mapa da fazenda com talhões coloridos por soqueira" width="1206" height="2622" fetchpriority="high"></div>
+      </div>
+      <div class="chip chip-a"><i class="dot"></i>Soqueira</div>
+      <div class="chip chip-b"><i class="dot dot-b"></i>5,6 ha</div>
+    </div>
+  </section>
+
+  <section class="problem">
+    <p class="problem-big reveal">Os produtores sempre tiveram a informação. <span>Só nunca tiveram um jeito simples de usá-la.</span></p>
+    <div class="problem-body reveal" style="--d:2">
+      <p>Mapas de papel se perdem. As pastas se acumulam. E a maioria dos softwares agrícolas foi feita para a cultura dos outros, não para a sua.</p>
+      <p>O Yote foi feito para uma coisa só: cana-de-açúcar. Tão simples que, se você sabe usar o celular, sabe usar o Yote.</p>
+    </div>
+  </section>
+
+  <section class="features" id="funcionalidades">
+    <div class="features-head">
+      <h2 class="reveal">Tudo o que a sua fazenda precisa. Nada que ela não precise.</h2>
+    </div>
+    <div class="features-grid">
+      <ol class="feature-list">
+        <li class="feature is-active" data-img="map" data-alt="Mapa por cores dos talhões">
+          <h3>Mapas por cores</h3>
+          <p class="feature-lead">Veja a fazenda inteira do jeito que precisar.</p>
+          <p>Alterne entre as visualizações de Corte, Variedade, Colheita e Maturador com um toque. Cada talhão ganha uma cor diferente, para você saber exatamente o que está onde, sem pegar em um pedaço de papel.</p>
+          <div class="seg" role="group" aria-label="Visualizações do mapa">
+            <button type="button" data-view="map" class="on">Soqueira</button>
+            <button type="button" data-view="ripener">Maturador</button>
+          </div>
+        </li>
+        <li class="feature" data-img="split" data-alt="Talhão com duas variedades divididas">
+          <h3>Variedades divididas</h3>
+          <p class="feature-lead">Um talhão, duas variedades. Sem problema.</p>
+          <p>Trace uma linha de divisão pelo número de linhas e identifique cada lado separadamente. Seu mapa continua preciso mesmo quando você planta mais de uma variedade no mesmo talhão.</p>
+        </li>
+        <li class="feature" data-img="list" data-alt="Lista de talhões pronta para exportar em PDF">
+          <h3>Exportar e compartilhar</h3>
+          <p class="feature-lead">Envie um mapa limpo em segundos.</p>
+          <p>Gere um mapa profissional em PDF com a marca Yote e compartilhe com sua equipe, o dono da terra ou o agrônomo em um toque. Sem imprimir, sem escanear, sem explicar.</p>
+        </li>
+        <li class="feature" data-img="products" data-alt="Registro de aplicação com produto, dose e unidade">
+          <h3>Registros de aplicação</h3>
+          <p class="feature-lead">Registre cada aplicação direto do campo.</p>
+          <p>Anote o produto aplicado, a dose e a unidade, tudo vinculado aos talhões exatos onde foi aplicado. Um histórico completo de cada aplicação, sempre no seu bolso.</p>
+        </li>
+      </ol>
+
+      <div class="features-stage">
+        <div class="phone tilt" data-tilt>
+          <div class="phone-core">
+            <img class="shot on" data-key="map" src="public/screenshots/map.png" alt="" loading="lazy">
+            <img class="shot" data-key="stubble" src="public/screenshots/stubble.png" alt="" loading="lazy">
+            <img class="shot" data-key="ripener" src="public/screenshots/ripener.png" alt="" loading="lazy">
+            <img class="shot" data-key="split" src="public/screenshots/split.png" alt="" loading="lazy">
+            <img class="shot" data-key="list" src="public/screenshots/list.png" alt="" loading="lazy">
+            <img class="shot" data-key="products" src="public/screenshots/products.png" alt="" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="plan" id="plano">
+    <div class="plan-copy">
+      <h2 class="reveal">Como começar.</h2>
+      <p class="reveal" style="--d:1">Nós configuramos tudo para você, a distância. Você só abre o app e usa.</p>
+      <ol class="steps">
+        <li class="reveal"><h3>Solicite uma demonstração</h3><p>Um formulário rápido: nome, telefone e e-mail. Só isso.</p></li>
+        <li class="reveal" style="--d:1"><h3>Entramos em contato</h3><p>O Caio fala com você pessoalmente. Sem call center, sem e-mails automáticos. Uma conversa de verdade sobre a sua fazenda.</p></li>
+        <li class="reveal" style="--d:2"><h3>Sua fazenda, configurada do jeito certo</h3><p>Mapeamos seus talhões por imagem de satélite ou a partir dos seus shapefiles e deixamos tudo pronto.</p></li>
+      </ol>
+    </div>
+
+    <div class="plan-card reveal spot" style="--d:2">
+      <div class="plan-card-in">
+        <h3>Yote Base</h3>
+        <p class="plan-sub">Mapeamos seus talhões por imagem de satélite, ou importamos seus shapefiles, e deixamos sua conta pronta para usar.</p>
+        <ul class="ticks">
+          <li>Todos os talhões identificados com variedade e corte desde o início</li>
+          <li>Acompanhe o corte de cada talhão a cada safra</li>
+          <li>Vários usuários com diferentes níveis de acesso</li>
+          <li>Controle de muda durante a colheita</li>
+          <li>Divida variedades dentro dos talhões</li>
+          <li>Compartilhe mapas: baixe um PDF limpo em segundos</li>
+          <li>Imprima fichas de talhão para a sua equipe</li>
+        </ul>
+        <a class="btn btn-light magnetic" href="demo.html">
+          <span class="btn-label">Solicitar uma demonstração</span>
+          <span class="btn-icon" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="story" id="historia">
+    <figure class="story-photo reveal">
+      <div class="photo-frame"><img src="public/caio.jpg" alt="Caio Phillipi em um canavial da Louisiana" loading="lazy"></div>
+      <figcaption>Caio Phillipi, em campo.</figcaption>
+    </figure>
+    <div class="story-copy">
+      <h2 class="reveal">Feito a partir do campo.</h2>
+      <p class="reveal" style="--d:1">Em 2019, antes de qualquer um pensar em um software feito só para a cana, Caio Phillipi já estava no campo, mapeando fazendas à mão ao lado do sogro, Bret Barrick, consultor agrícola respeitado, com décadas de experiência no setor canavieiro da Louisiana.</p>
+      <p class="reveal" style="--d:2">O que começou como mapas sob medida para alguns produtores virou algo maior. O Yote Farmview se tornou o primeiro app feito exclusivamente para produtores de cana nos Estados Unidos, e aqueles primeiros produtores continuam clientes até hoje.</p>
+      <p class="reveal" style="--d:3">O Yote não é uma empresa grande. Não tem call center, fila de chamados nem robô de atendimento. Quando você entra em contato, fala com o Caio. E a configuração da sua fazenda fica por nossa conta.</p>
+      <p class="story-end reveal" style="--d:4">Isso não é uma limitação. É justamente esse o ponto.</p>
+      <a class="link reveal" style="--d:5;width:fit-content" href="sobre.html">Conheça a nossa história</a>
+    </div>
+  </section>
+
+  <section class="faq">
+    <h2 class="reveal">Perguntas que os produtores fazem.</h2>
+    <div class="faq-list">
+      <details class="reveal"><summary>O Yote funciona na minha região?<i aria-hidden="true"></i></summary><div class="ans"><p>O Yote foi feito para produtores de cana-de-açúcar, onde quer que a cana seja cultivada. Fale com a gente para conversarmos sobre a sua região.</p></div></details>
+      <details class="reveal"><summary>O que eu preciso ter para começar?<i aria-hidden="true"></i></summary><div class="ans"><p>Nós mapeamos seus talhões por imagem de satélite ou a partir dos seus shapefiles. Você só precisa do celular e de uma conversa com o Caio.</p></div></details>
+      <details class="reveal"><summary>Recebo mapas impressos?<i aria-hidden="true"></i></summary><div class="ans"><p>Você pode imprimir fichas de talhão para a sua equipe e baixar um PDF limpo de qualquer mapa em segundos.</p></div></details>
+      <details class="reveal"><summary>Quantas pessoas podem usar?<i aria-hidden="true"></i></summary><div class="ans"><p>Vários usuários, cada um com o seu nível de acesso.</p></div></details>
+      <details class="reveal"><summary>Funciona sem sinal de celular?<i aria-hidden="true"></i></summary><div class="ans"><p>Pergunte direto ao Caio na demonstração. Ele mostra como o app se comporta na sua região.</p></div></details>
+      <details class="reveal"><summary>Com quem eu falo se precisar de ajuda?<i aria-hidden="true"></i></summary><div class="ans"><p>Com o Caio. Sem call center e sem robô de atendimento.</p></div></details>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="cta-in">
+      <h2 class="reveal">Pronto para ter a sua fazenda no bolso?</h2>
+      <p class="reveal" style="--d:1">Solicite uma demonstração e o Caio vai entrar em contato pessoalmente.</p>
+      <a class="btn btn-light magnetic reveal" style="--d:2" href="demo.html">
+        <span class="btn-label">Solicitar uma demonstração</span>
+        <span class="btn-icon" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg></span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot" id="contato">
+  <div class="foot-top">
+    <div>
+      <img class="brand-mark brand-mark-light" src="public/brand-navy.png" alt="Yote Farmview" width="958" height="422">
+      <p class="foot-tag">Feito para a cana-de-açúcar, desde 2019.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Menu</h4>
+      <a href="funcionalidades.html">Funcionalidades</a>
+      <a href="index.html#plano">Plano</a>
+      <a href="sobre.html">Quem somos</a>
+    </div>
+    <div class="foot-col">
+      <h4>Contato</h4>
+      <a href="mailto:support@yotefarmview.com">support@yotefarmview.com</a>
+      <a href="tel:+12255724195">+1 (225) 572-4195</a>
+    </div>
+    <div class="foot-col foot-app">
+      <h4>Baixe o app</h4>
+      <img src="public/app-store-qr.png" alt="QR code para baixar o Yote Farmview na App Store" width="96" height="96" loading="lazy">
+    </div>
+  </div>
+  <div class="foot-bot">
+    <span>© 2026 Yote FarmView. Todos os direitos reservados.</span>
+    <span class="foot-legal"><a href="#">Política de Privacidade</a><a href="#">Termos de Serviço</a><a href="#">Política de Cookies</a></span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

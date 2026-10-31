@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solicitar demonstração — Yote Farmview</title>
+<meta name="description" content="Preencha nome, telefone e e-mail. O Caio entra em contato pessoalmente.">
+<link rel="icon" href="public/favicon-light.png" media="(prefers-color-scheme: light)">
+<link rel="icon" href="public/favicon-dark.png" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<noscript><style>.reveal{opacity:1;transform:none;filter:none}</style></noscript>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<header class="nav" id="nav">
+  <a class="brand" href="index.html" aria-label="Yote Farmview, início"><img class="brand-mark" src="public/brand-navy.png" alt="Yote Farmview" width="958" height="422"></a>
+  <nav class="nav-links" aria-label="Principal">
+    <a href="funcionalidades.html">Funcionalidades</a>
+    <a href="index.html#plano">Plano</a>
+    <a href="sobre.html">Quem somos</a>
+    <a href="demo.html" aria-current="page">Contato</a>
+  </nav>
+  <a class="btn btn-sm magnetic" href="demo.html">
+    <span class="btn-label">Solicitar demo</span>
+    <span class="btn-icon" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg></span>
+  </a>
+</header>
+<main>
+  <section class="page-hero demo-hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="demo-copy">
+      <h1 class="hero-title"><span class="line"><span class="line-in">Vamos conversar</span></span><span class="line"><span class="line-in">sobre a sua <em>fazenda.</em></span></span></h1>
+      <p class="lede reveal" style="--d:2">Nome, telefone e e-mail. Só isso. O Caio fala com você pessoalmente: sem call center, sem e-mails automáticos.</p>
+      <dl class="contact reveal" style="--d:3">
+        <div><dt>E-mail</dt><dd><a href="mailto:support@yotefarmview.com">support@yotefarmview.com</a></dd></div>
+        <div><dt>Telefone</dt><dd><a href="tel:+12255724195">+1 (225) 572-4195</a></dd></div>
+      </dl>
+    </div>
+
+    <div class="form-shell reveal" style="--d:2">
+      <form class="form-core" id="demo-form" novalidate>
+        <div class="field"><label for="nome">Nome</label><input id="nome" name="nome" autocomplete="name" required><p class="err" data-for="nome">Informe o seu nome.</p></div>
+        <div class="field"><label for="tel">Telefone</label><input id="tel" name="tel" type="tel" autocomplete="tel" required><p class="err" data-for="tel">Informe um telefone para o Caio ligar.</p></div>
+        <div class="field"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" required><p class="err" data-for="email">Informe um e-mail válido.</p></div>
+        <button class="btn btn-light magnetic" type="submit"><span class="btn-label">Enviar pedido</span><span class="btn-icon" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg></span></button>
+        <p class="form-note" id="form-note" role="status">O pedido abre o seu aplicativo de e-mail, já endereçado ao Caio.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="plan demo-steps">
+    <div class="plan-copy">
+      <h2 class="reveal">O que acontece depois.</h2>
+      <ol class="steps">
+        <li class="reveal"><h3>O Caio liga ou escreve</h3><p>Uma conversa de verdade sobre a sua fazenda.</p></li>
+        <li class="reveal" style="--d:1"><h3>Mapeamos seus talhões</h3><p>Por imagem de satélite ou a partir dos seus shapefiles.</p></li>
+        <li class="reveal" style="--d:2"><h3>Você abre o app</h3><p>Tudo configurado do jeito que você precisa.</p></li>
+      </ol>
+    </div>
+  </section>
+</main>
+<footer class="foot" id="contato">
+  <div class="foot-top">
+    <div>
+      <img class="brand-mark brand-mark-light" src="public/brand-navy.png" alt="Yote Farmview" width="958" height="422">
+      <p class="foot-tag">Feito para a cana-de-açúcar, desde 2019.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Menu</h4>
+      <a href="funcionalidades.html">Funcionalidades</a>
+      <a href="index.html#plano">Plano</a>
+      <a href="sobre.html">Quem somos</a>
+    </div>
+    <div class="foot-col">
+      <h4>Contato</h4>
+      <a href="mailto:support@yotefarmview.com">support@yotefarmview.com</a>
+      <a href="tel:+12255724195">+1 (225) 572-4195</a>
+    </div>
+    <div class="foot-col foot-app">
+      <h4>Baixe o app</h4>
+      <img src="public/app-store-qr.png" alt="QR code para baixar o Yote Farmview na App Store" width="96" height="96" loading="lazy">
+    </div>
+  </div>
+  <div class="foot-bot">
+    <span>© 2026 Yote FarmView. Todos os direitos reservados.</span>
+    <span class="foot-legal"><a href="#">Política de Privacidade</a><a href="#">Termos de Serviço</a><a href="#">Política de Cookies</a></span>
+  </div>
+</footer>
+<script src="main.js"></script>
+</body>
+</html>
